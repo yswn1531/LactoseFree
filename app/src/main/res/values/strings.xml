@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">LactoseFree</string>
+    <string name="lactoseTitle">유당불내증</string>
+    <string name="lactoseContent">
+        락토오스를 분해하는 락타아제의 부족으로 일어나는 현상
+    </string>
+    <string name="lactoseCafeTitle">대체 우유 옵션이 있는 곳</string>
+    <string name="lactoseCafeContent">
+        -메가커피: 아몬드밀크, 오트밀크 \n
+        -스타벅스: 오트밀크, 두유 \n
+        -빽다방: 두유 \n
+        -엔젤리너스: 락토프리, 두유 \n
+        -폴바셋: 락토프리, 두유 \n
+        -투섬플레이스: 락토프리, 두유 \n
+    </string>
+    <string name="tempContext">
+        에스프레스로는 쓰지만\n
+        이탈리아사람들이 좋아한다.\n
+        텍스트 테스트\n
+    </string>
 </resources>

@@ -2,6 +2,7 @@ package com.sesac.lactosefree
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -22,23 +23,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupJetpackNavigation() {
         val host: NavHostFragment = supportFragmentManager
-            .findFragmentById(R.id.bottomNavHostFragment) as NavHostFragment? ?: return
+            .findFragmentById(R.id.bottomNavHostContainer) as NavHostFragment? ?: return
         navController = host.navController
         binding.bottomNav.setupWithNavController(navController)
-        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
-        navController.setGraph(navGraph,null)
-
-        //네비게이션 바가 보이는 곳과 보이지 않을 곳 설정
-        /*navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination == navController.findDestination(R.id.fragment_main) ||
-                destination == navController.findDestination(R.id.fragment_artist) ||
-                destination == navController.findDestination(R.id.fragment_schedule) ||
-                destination == navController.findDestination(R.id.fragment_group) ||
-                destination == navController.findDestination(R.id.fragment_setting)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination == navController.findDestination(R.id.brandMenuFragment)  ||
+                destination == navController.findDestination(R.id.favoriteDetailFragment)
             ) {
-                binding.bottomNavigationView.visibility = View.VISIBLE
-            } else binding.bottomNavigationView.visibility = View.GONE
-        }*/
+                binding.bottomNav.visibility = View.GONE
+            } else binding.bottomNav.visibility = View.VISIBLE
+        }
     }
 
 

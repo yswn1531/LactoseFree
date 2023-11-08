@@ -16,7 +16,7 @@
         >
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/bottomNavHostFragment"
+            android:id="@+id/bottomNavHostContainer"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -35,6 +35,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu"
+        android:background="@color/PrimaryColor"
+        app:itemBackground="@color/LightPrimaryColor"
         >
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 

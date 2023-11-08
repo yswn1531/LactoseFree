@@ -1,32 +1,25 @@
 package com.sesac.lactosefree.information
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sesac.lactosefree.R
+import com.sesac.lactosefree.common.ViewBindingBaseFragment
+import com.sesac.lactosefree.databinding.FragmentInformationBinding
 
-class InformationFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = InformationFragment()
-    }
-
-    private lateinit var viewModel: InformationViewModel
+class InformationFragment : ViewBindingBaseFragment<FragmentInformationBinding>(FragmentInformationBinding::inflate){
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_information, container, false)
+        _binding = FragmentInformationBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(InformationViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
 }
