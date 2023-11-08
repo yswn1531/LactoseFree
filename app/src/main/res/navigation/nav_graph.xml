@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
+
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.sesac.lactosefree.home.HomeFragment"
@@ -13,15 +14,35 @@
         android:id="@+id/brandFragment"
         android:name="com.sesac.lactosefree.brand.BrandFragment"
         android:label="fragment_brand"
-        tools:layout="@layout/fragment_brand" />
+        tools:layout="@layout/fragment_brand" >
+        <action
+            android:id="@+id/action_brandFragment_to_brandMenuFragment"
+            app:destination="@id/brandMenuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/brandMenuFragment"
+        android:name="com.sesac.lactosefree.brand.detail.BrandMenuFragment"
+        android:label="fragment_brand_menu"
+        tools:layout="@layout/fragment_brand_menu" />
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.sesac.lactosefree.favorite.FavoriteFragment"
         android:label="fragment_favorite"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_favoriteDetailFragment"
+            app:destination="@id/favoriteDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/informationFragment"
         android:name="com.sesac.lactosefree.information.InformationFragment"
         android:label="fragment_information"
         tools:layout="@layout/fragment_information" />
+    <fragment
+        android:id="@+id/favoriteDetailFragment"
+        android:name="com.sesac.lactosefree.favorite.detail.FavoriteDetailFragment"
+        android:label="fragment_favorite_detail"
+        tools:layout="@layout/fragment_favorite_detail" />
+
+
 </navigation>

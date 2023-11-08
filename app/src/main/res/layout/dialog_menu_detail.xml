@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:paddingHorizontal="70dp"
+    android:paddingVertical="10dp"
+    android:background="@drawable/style_dialog"
+    >
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/noticeMilkText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="우유 함유"
+        android:textColor="@android:color/holo_red_dark"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/kcalText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:text="칼로리"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noticeMilkText" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/kcal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@id/kcalText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/saltText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:text="나트륨"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kcalText"
+        />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/salt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/saltText"
+        app:layout_constraintTop_toBottomOf="@id/kcal"  />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sugarText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:text="당류"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saltText"
+        />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sugar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@id/sugarText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/salt" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fatText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:text="포화 지방"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sugarText"
+        />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/fatText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fatText"
+        app:layout_constraintTop_toBottomOf="@id/sugar" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/proteinText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:text="단백질"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fatText"
+        />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/protein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/proteinText"
+        app:layout_constraintTop_toBottomOf="@id/fat" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/caffeineText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="카페인"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/proteinText" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/caffeine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/caffeineText"
+        app:layout_constraintTop_toBottomOf="@id/protein" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

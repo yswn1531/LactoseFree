@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/ic_home_24"
         android:title="Home" />
     <item
-        android:id="@+id/brand"
+        android:id="@+id/brandFragment"
         android:icon="@drawable/ic_cafe_24"
         android:title="Brand" />
     <item
-        android:id="@+id/favorite"
+        android:id="@+id/favoriteFragment"
         android:icon="@drawable/ic_favorite_24"
         android:title="Favorite" />
     <item
-        android:id="@+id/info"
+        android:id="@+id/informationFragment"
         android:icon="@drawable/ic_info_24"
         android:title="Info" />
 
