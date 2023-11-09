@@ -35,7 +35,6 @@ class FavoriteDetailFragment : ViewBindingBaseFragment<FragmentFavoriteDetailBin
             favoriteDetailEditButton.setOnClickListener {
                 if (favoriteDetailText.text?.isNotEmpty() == true) {
                     favoriteDetailText.isEnabled = !favoriteDetailText.isEnabled
-                    favoriteDetailText.setTextColor(resources.getColor(R.color.PrimaryText))
                     Toast.makeText(context, "수정모드", Toast.LENGTH_SHORT).show()
                 }
             }

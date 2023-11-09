@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="tabText" parent="Widget.Material3.TabLayout">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
-    </style>
 
     <style name="CustomAlertDialog">
         <item name="android:backgroundDimEnabled">true</item>
@@ -12,4 +7,27 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:windowIsFloating">true</item>
     </style>
+    
+    <style name="NavigationBar" parent="Widget.Material3.BottomNavigationView">
+        <item name="menu">@menu/bottom_navigation_menu</item>
+        <item name="itemBackground">@color/PrimaryColor</item>
+        <item name="itemIconTint">@color/selector_navigationbar</item>
+        <item name="itemActiveIndicatorStyle">@null</item>
+    </style>
+
+    <style name="MenuDetailTab" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabSelectedTextColor">@color/SecondaryText</item>
+        <item name="tabBackground">@drawable/style_menu_tab</item>
+        <item name="android:background">@color/LightPrimaryColor</item>
+        <item name="tabTextAppearance">@style/tabText</item>
+    </style>
+
+    <style name="tabText" parent="Widget.Material3.TabLayout">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
 </resources>

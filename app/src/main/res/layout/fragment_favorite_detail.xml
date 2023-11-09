@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".favorite.detail.FavoriteDetailFragment"
-    android:background="@color/LightPrimaryColor"
     >
 
     <androidx.constraintlayout.widget.Guideline
@@ -73,7 +72,6 @@
         android:gravity="top"
         android:background="@drawable/style_menu_tab"
         android:enabled="false"
-        android:textColor="@color/PrimaryText"
         />
 
 
