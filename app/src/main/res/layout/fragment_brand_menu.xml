@@ -35,10 +35,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_arrow_back_24"
-        app:menu="@menu/menu_toolbar"
         app:title="별다방"
-        app:titleTextColor="?attr/colorOnSurface" />
+        style="@style/toolbar"
+        />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/menuTL"
@@ -47,14 +46,13 @@
         app:layout_constraintStart_toStartOf="@id/glStart"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintTop_toBottomOf="@+id/brandMenuTB"
-        style="@style/MenuDetailTab"
+        style="@style/menuDetailTab"
         >
 
-        <com.google.android.material.tabs.TabItem
+        <!--<com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="전체"
-
             />
 
         <com.google.android.material.tabs.TabItem
@@ -81,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="기타 음료"
-            />
+            />-->
 
 
     </com.google.android.material.tabs.TabLayout>
