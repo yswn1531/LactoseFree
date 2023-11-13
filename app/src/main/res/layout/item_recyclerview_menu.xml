@@ -38,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/recyclerImage"
+            android:textSize="@dimen/bodyTextSize"
             android:layout_marginTop="8dp"
             android:layout_centerHorizontal="true" />
 

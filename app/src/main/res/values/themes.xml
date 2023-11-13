@@ -7,6 +7,11 @@
         <item name="colorAccent">@color/AccentColor</item>
         <!-- Background Color. -->
         <item name="android:windowBackground">@color/LightPrimaryColor</item>
+        <!-- Font. -->
+        <item name="editTextStyle">@style/customEditTextFontStyle</item>
+        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
+        <item name="titleTextStyle">@style/customToolbarFontStyle</item>
+
     </style>
 
     <style name="Theme.LactoseFree" parent="Base.Theme.LactoseFree" />

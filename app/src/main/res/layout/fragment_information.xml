@@ -7,36 +7,36 @@
     tools:context=".information.InformationFragment">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gl_start"
+        android:id="@+id/glInformationStart"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_begin="24dp"
+        app:layout_constraintGuide_begin="@dimen/guideLine"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gl_end"
+        android:id="@+id/glInformationEnd"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_end="24dp"
+        app:layout_constraintGuide_end="@dimen/guideLine"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/normalTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
+        app:layout_constraintStart_toStartOf="@id/glInformationStart"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="30dp"
         android:padding="4dp"
-        android:textSize="40dp"
+        android:textSize="@dimen/headLineTextSize"
         android:text="@string/lactoseTitle"
         android:background="@drawable/style_menu_tab"
         />
@@ -47,38 +47,38 @@
         android:id="@+id/normalInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintStart_toStartOf="@id/glInformationStart"
+        app:layout_constraintEnd_toEndOf="@id/glInformationEnd"
         app:layout_constraintTop_toBottomOf="@id/normalTitle"
         android:layout_marginTop="20dp"
         android:text="@string/lactoseContent"
-        android:textSize="24dp"
+        android:textSize="@dimen/subTitleTextSize"
         android:background="@drawable/style_menu_tab"
         />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/cafeTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintTop_toBottomOf="@id/normalInfo"
         android:layout_marginTop="50dp"
-        android:padding="4dp"
-        android:textSize="30dp"
-        android:text="@string/lactoseCafeTitle"
         android:background="@drawable/style_menu_tab"
-        />
+        android:padding="4dp"
+        android:text="@string/lactoseCafeTitle"
+        android:textSize="@dimen/headLineTextSize"
+        app:layout_constraintEnd_toStartOf="@+id/glInformationEnd"
+        app:layout_constraintStart_toStartOf="@id/glInformationStart"
+        app:layout_constraintTop_toBottomOf="@id/normalInfo" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/cafeInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintStart_toStartOf="@id/glInformationStart"
+        app:layout_constraintEnd_toEndOf="@id/glInformationEnd"
         app:layout_constraintTop_toBottomOf="@id/cafeTitle"
         android:layout_marginTop="20dp"
         android:text="@string/lactoseCafeContent"
-        android:textSize="24dp"
+        android:textSize="@dimen/subTitleTextSize"
         android:background="@drawable/style_menu_tab"
         />
 

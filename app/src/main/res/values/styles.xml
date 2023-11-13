@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="CustomAlertDialog">
+    <!-- Custom font 적용 -->
+    <style name="customTextViewFontStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:fontFamily">@font/font_default</item>
+    </style>
+
+    <style name="customTextViewFontBoldStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:fontFamily">@font/font_default</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="customEditTextFontStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:fontFamily">@font/font_default</item>
+    </style>
+
+    <style name="customToolbarFontStyle" parent="Widget.Material3.Toolbar">
+        <item name="android:fontFamily">@font/font_default</item>
+    </style>
+
+
+    <style name="customAlertDialog">
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:colorBackground">?attr/colorBackgroundFloating</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:windowIsFloating">true</item>
     </style>
     
-    <style name="NavigationBar" parent="Widget.Material3.BottomNavigationView">
+    <style name="navigationBar" parent="Widget.Design.BottomNavigationView">
         <item name="menu">@menu/bottom_navigation_menu</item>
         <item name="itemBackground">@color/PrimaryColor</item>
         <item name="itemIconTint">@color/selector_navigationbar</item>
         <item name="itemActiveIndicatorStyle">@null</item>
+        <item name="itemTextAppearanceActive">@style/BottomNavigationTextAppearance</item>
     </style>
 
-    <style name="MenuDetailTab" parent="Widget.MaterialComponents.TabLayout">
+    <style name="BottomNavigationTextAppearance" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="menuDetailTab" parent="Widget.MaterialComponents.TabLayout">
         <item name="tabIndicatorHeight">0dp</item>
         <item name="tabMode">scrollable</item>
         <item name="tabSelectedTextColor">@color/SecondaryText</item>
@@ -28,6 +52,19 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="toolbar">
+        <item name="navigationIcon">@drawable/ic_arrow_back_24</item>
+        <item name="menu">@menu/menu_toolbar</item>
+        <item name="titleTextColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="FavoriteRatingBar" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:isIndicator">true</item>
+        <item name="android:numStars">5</item>
+        <item name="android:progressTint">@color/RatingBarColor</item>
+        <item name="android:stepSize">1</item>
     </style>
 
 </resources>

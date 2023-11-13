@@ -19,8 +19,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/favoriteImage"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="@dimen/favoriteImageWidth"
+            android:layout_height="@dimen/favoriteImageHeight"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -31,39 +31,33 @@
             android:id="@+id/favoriteBrand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="스타벅스"
-            android:textSize="15sp"
-            app:layout_constraintBaseline_toTopOf="@id/favoriteImage"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/favoriteImage"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/favoriteImage"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="스타벅스"
+            android:textSize="@dimen/bodyTextSize"
+            />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/favoriteName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/favoriteBrand"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/favoriteImage"
+            app:layout_constraintBottom_toTopOf="@id/favoriteRating"
             android:text="아이스 아메리카노"
-            android:textSize="20sp"
+            android:textSize="@dimen/subTitleTextSize"
             />
 
-        <RatingBar
+        <androidx.appcompat.widget.AppCompatRatingBar
             android:id="@+id/favoriteRating"
-            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/favoriteImage"
-            app:layout_constraintTop_toBottomOf="@+id/favoriteName"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:stepSize="1"
-            android:progressTint="#FFC100"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/FavoriteRatingBar"
             />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
