@@ -4,28 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/LightPrimaryColor"
     tools:context=".brand.detail.BrandMenuFragment">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/glStart"
+        android:id="@+id/glMenuStart"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_begin="32dp"
+        app:layout_constraintGuide_begin="@dimen/guideLine"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/glEnd"
+        android:id="@+id/glMenuEnd"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_end="24dp"
+        app:layout_constraintGuide_end="@dimen/guideLine"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,58 +35,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_arrow_back_24"
-        app:menu="@menu/menu_toolbar"
         app:title="별다방"
-        app:titleTextColor="?attr/colorOnSurface" />
+        style="@style/toolbar"
+        />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/menuTL"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/LightPrimaryColor"
-        app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintEnd_toEndOf="@id/glEnd"
+        app:layout_constraintStart_toStartOf="@id/glMenuStart"
+        app:layout_constraintEnd_toEndOf="@id/glMenuEnd"
         app:layout_constraintTop_toBottomOf="@+id/brandMenuTB"
-        app:tabBackground="@drawable/style_menu_tab"
-        app:tabIndicatorHeight="0dp"
-        app:tabMode="scrollable"
-        app:tabTextAppearance="@style/tabText"
-        app:tabSelectedTextColor="@color/Text"
+        style="@style/menuDetailTab"
         >
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="전체"
-            />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="커피" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="에이드" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="탄산" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="차" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="기타 음료"
-            />
-
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -96,12 +56,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
-        app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintEnd_toEndOf="@+id/glEnd"
+        app:layout_constraintStart_toStartOf="@id/glMenuStart"
+        app:layout_constraintEnd_toEndOf="@+id/glMenuEnd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/menuTL"
         >
-
     </androidx.recyclerview.widget.RecyclerView>
 
 

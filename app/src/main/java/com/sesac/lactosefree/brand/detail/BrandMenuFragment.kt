@@ -2,14 +2,10 @@ package com.sesac.lactosefree.brand.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.core.view.MenuProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,8 +13,8 @@ import com.google.android.material.tabs.TabLayout
 import com.sesac.lactosefree.R
 import com.sesac.lactosefree.brand.Brand
 import com.sesac.lactosefree.brand.BrandAdapter
-import com.sesac.lactosefree.common.CustomDialog
 import com.sesac.lactosefree.brand.Detail
+import com.sesac.lactosefree.common.CustomDialog
 import com.sesac.lactosefree.common.MenuDetailDialog
 import com.sesac.lactosefree.common.ViewBindingBaseFragment
 import com.sesac.lactosefree.databinding.FragmentBrandMenuBinding
@@ -40,10 +36,9 @@ class BrandMenuFragment : ViewBindingBaseFragment<FragmentBrandMenuBinding>(Frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         CustomDialog("대체 우유 : 오트밀크, 두유",requireContext()).show()
-        setTabItemMargin(binding.menuTL,30)
+
         val brandRV = binding.brandMenuRV
         brandRV.layoutManager = GridLayoutManager(context,2, LinearLayoutManager.VERTICAL,false)
-        brandRV.setHasFixedSize(true)
         brandList = setDataInList()
         brandAdapter = BrandAdapter(brandList,true)
         brandAdapter.setItemClickListener(object : BrandAdapter.OnItemClickListener{
@@ -76,6 +71,17 @@ class BrandMenuFragment : ViewBindingBaseFragment<FragmentBrandMenuBinding>(Frag
             findNavController().popBackStack()
         }
 
+        with(binding){
+            menuTL.addTab(menuTL.newTab().setText("커피"))
+            menuTL.addTab(menuTL.newTab().setText("차"))
+            menuTL.addTab(menuTL.newTab().setText("에이드"))
+            menuTL.addTab(menuTL.newTab().setText("음료"))
+            menuTL.addTab(menuTL.newTab().setText("커피"))
+            menuTL.addTab(menuTL.newTab().setText("차"))
+            menuTL.addTab(menuTL.newTab().setText("에이드"))
+            menuTL.addTab(menuTL.newTab().setText("음료"))
+            setTabItemMargin(menuTL,30)
+        }
     }
 
 

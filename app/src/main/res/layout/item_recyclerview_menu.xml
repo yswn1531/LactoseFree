@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
-    android:backgroundTint="@color/Text"
     app:cardCornerRadius="8dp"
     app:cardElevation="5dp"
     app:cardPreventCornerOverlap="true"
@@ -39,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/recyclerImage"
+            android:textSize="@dimen/bodyTextSize"
             android:layout_marginTop="8dp"
             android:layout_centerHorizontal="true" />
 

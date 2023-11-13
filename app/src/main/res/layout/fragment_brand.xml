@@ -5,28 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".brand.BrandFragment"
-    android:background="@color/LightPrimaryColor"
     >
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/glStart"
+        android:id="@+id/glBrandStart"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_begin="32dp"
+        app:layout_constraintGuide_begin="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/glEnd"
+        android:id="@+id/glBrandEnd"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_end="24dp"
+        app:layout_constraintGuide_end="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,8 +33,8 @@
         android:id="@+id/brandRV"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintEnd_toEndOf="@id/glEnd"
+        app:layout_constraintStart_toStartOf="@id/glBrandStart"
+        app:layout_constraintEnd_toEndOf="@id/glBrandEnd"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/item_recyclerview_menu"
