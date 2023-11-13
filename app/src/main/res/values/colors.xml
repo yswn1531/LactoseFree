@@ -8,4 +8,5 @@
     <color name="SecondaryText">#FFFFFFFF</color>
     <color name="DiverColor">#BDBDBD</color>
     <color name="ThirdText">#757575</color>
+    <color name="RatingBarColor">#FFC100</color>
 </resources>

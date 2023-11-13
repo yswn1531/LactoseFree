@@ -18,4 +18,9 @@
         이탈리아사람들이 좋아한다.\n
         텍스트 테스트\n
     </string>
+    <string name="navigationBarItemHome">Home</string>
+    <string name="navigationBarItemBrand">Brand</string>
+    <string name="navigationBarItemFavorite">Favorite</string>
+    <string name="navigationBarItemInfo">Info</string>
+
 </resources>
