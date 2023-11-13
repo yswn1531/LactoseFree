@@ -14,8 +14,6 @@ import com.sesac.lactosefree.databinding.FragmentFavoriteDetailBinding
 class FavoriteDetailFragment : ViewBindingBaseFragment<FragmentFavoriteDetailBinding>(
     FragmentFavoriteDetailBinding::inflate){
 
-    var editMode = false
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,5 +41,10 @@ class FavoriteDetailFragment : ViewBindingBaseFragment<FragmentFavoriteDetailBin
                 findNavController().popBackStack()
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Toast.makeText(context,"${binding.favoriteDetailRatingBar.rating}",Toast.LENGTH_SHORT).show()
     }
 }
