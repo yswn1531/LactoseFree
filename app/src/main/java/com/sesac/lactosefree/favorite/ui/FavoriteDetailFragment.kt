@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.favorite.detail
+package com.sesac.lactosefree.favorite.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".brand.BrandFragment"
+    tools:context=".brand.ui.BrandFragment"
     >
 
     <androidx.constraintlayout.widget.Guideline
