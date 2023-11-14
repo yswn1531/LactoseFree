@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.common
+package com.sesac.lactosefree.brand.ui
 
 import android.app.Dialog
 import android.content.Context
