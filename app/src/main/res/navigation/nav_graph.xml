@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/brandFragment"
-        android:name="com.sesac.lactosefree.brand.BrandFragment"
+        android:name="com.sesac.lactosefree.brand.ui.BrandFragment"
         android:label="fragment_brand"
         tools:layout="@layout/fragment_brand" >
         <action
@@ -21,12 +21,12 @@
     </fragment>
     <fragment
         android:id="@+id/brandMenuFragment"
-        android:name="com.sesac.lactosefree.brand.detail.BrandMenuFragment"
+        android:name="com.sesac.lactosefree.brand.ui.BrandMenuFragment"
         android:label="fragment_brand_menu"
         tools:layout="@layout/fragment_brand_menu" />
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.sesac.lactosefree.favorite.FavoriteFragment"
+        android:name="com.sesac.lactosefree.favorite.ui.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" >
         <action
@@ -40,7 +40,7 @@
         tools:layout="@layout/fragment_information" />
     <fragment
         android:id="@+id/favoriteDetailFragment"
-        android:name="com.sesac.lactosefree.favorite.detail.FavoriteDetailFragment"
+        android:name="com.sesac.lactosefree.favorite.ui.FavoriteDetailFragment"
         android:label="fragment_favorite_detail"
         tools:layout="@layout/fragment_favorite_detail" />
 

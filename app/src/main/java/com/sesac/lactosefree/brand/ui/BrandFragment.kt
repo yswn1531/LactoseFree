@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.brand
+package com.sesac.lactosefree.brand.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sesac.lactosefree.R
+import com.sesac.lactosefree.brand.Brand
 import com.sesac.lactosefree.common.ViewBindingBaseFragment
 import com.sesac.lactosefree.databinding.FragmentBrandBinding
 
@@ -32,7 +33,7 @@ class BrandFragment : ViewBindingBaseFragment<FragmentBrandBinding>(FragmentBran
         brandRV.setHasFixedSize(true)
         brandList = setDataInList()
         brandAdapter = BrandAdapter(brandList,false)
-        brandAdapter.setItemClickListener(object : BrandAdapter.OnItemClickListener{
+        brandAdapter.setItemClickListener(object : BrandAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
                 val action = BrandFragmentDirections.actionBrandFragmentToBrandMenuFragment()
                 findNavController().navigate(action)

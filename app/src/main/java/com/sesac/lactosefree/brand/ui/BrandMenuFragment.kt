@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.brand.detail
+package com.sesac.lactosefree.brand.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.sesac.lactosefree.R
 import com.sesac.lactosefree.brand.Brand
-import com.sesac.lactosefree.brand.BrandAdapter
 import com.sesac.lactosefree.brand.Detail
 import com.sesac.lactosefree.common.CustomDialog
 import com.sesac.lactosefree.common.MenuDetailDialog
@@ -41,7 +40,7 @@ class BrandMenuFragment : ViewBindingBaseFragment<FragmentBrandMenuBinding>(Frag
         brandRV.layoutManager = GridLayoutManager(context,2, LinearLayoutManager.VERTICAL,false)
         brandList = setDataInList()
         brandAdapter = BrandAdapter(brandList,true)
-        brandAdapter.setItemClickListener(object : BrandAdapter.OnItemClickListener{
+        brandAdapter.setItemClickListener(object : BrandAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
                 val dialog = MenuDetailDialog(Detail(12.2f,2.4f,0f,0f,0.9f,204.2f),requireContext())
                 dialog.show()

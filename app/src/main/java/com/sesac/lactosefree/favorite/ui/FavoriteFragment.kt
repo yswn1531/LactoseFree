@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.favorite
+package com.sesac.lactosefree.favorite.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -32,7 +32,7 @@ class FavoriteFragment : ViewBindingBaseFragment<FragmentFavoriteBinding>(Fragme
         favoriteRV.setHasFixedSize(true)
         favoriteList = setDataInList()
         favoriteAdapter = FavoriteAdapter(favoriteList)
-        favoriteAdapter.setItemClickListener(object : FavoriteAdapter.OnItemClickListener{
+        favoriteAdapter.setItemClickListener(object : FavoriteAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
                 val action = FavoriteFragmentDirections.actionFavoriteFragmentToFavoriteDetailFragment()
                 findNavController().navigate(action)
