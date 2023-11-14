@@ -14,7 +14,6 @@ import com.sesac.lactosefree.R
 import com.sesac.lactosefree.brand.Brand
 import com.sesac.lactosefree.brand.Detail
 import com.sesac.lactosefree.common.CustomDialog
-import com.sesac.lactosefree.common.MenuDetailDialog
 import com.sesac.lactosefree.common.ViewBindingBaseFragment
 import com.sesac.lactosefree.databinding.FragmentBrandMenuBinding
 
