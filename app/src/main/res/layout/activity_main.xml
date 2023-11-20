@@ -38,7 +38,7 @@
         app:itemBackground="@color/PrimaryColor"
         app:itemIconTint="@color/selector_navigationbar"
         app:itemActiveIndicatorStyle="@null"
-        app:itemTextAppearanceActive="@style/BottomNavigationTextAppearance"
+        app:itemTextAppearanceActive="@style/bottomNavigationTextAppearance"
 
         >
     </com.google.android.material.bottomnavigation.BottomNavigationView>

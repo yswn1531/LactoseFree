@@ -32,11 +32,11 @@
         <item name="itemBackground">@color/PrimaryColor</item>
         <item name="itemIconTint">@color/selector_navigationbar</item>
         <item name="itemActiveIndicatorStyle">@null</item>
-        <item name="itemTextAppearanceActive">@style/BottomNavigationTextAppearance</item>
+        <item name="itemTextAppearanceActive">@style/bottomNavigationTextAppearance</item>
     </style>
 
-    <style name="BottomNavigationTextAppearance" parent="TextAppearance.AppCompat.Caption">
-        <item name="android:textSize">20sp</item>
+    <style name="bottomNavigationTextAppearance" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">@dimen/bodyTextSize</item>
     </style>
 
     <style name="menuDetailTab" parent="Widget.MaterialComponents.TabLayout">
@@ -60,7 +60,7 @@
         <item name="titleTextColor">?attr/colorOnSurface</item>
     </style>
 
-    <style name="FavoriteRatingBar" parent="Widget.AppCompat.RatingBar.Small">
+    <style name="favoriteRatingBar" parent="Widget.AppCompat.RatingBar.Small">
         <item name="android:isIndicator">true</item>
         <item name="android:numStars">5</item>
         <item name="android:progressTint">@color/RatingBarColor</item>
