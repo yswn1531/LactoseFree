@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.common
+package com.yoon.lactosefree.common
 
 import android.Manifest
 import android.app.Activity
@@ -6,9 +6,11 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
 
 const val RETURN_VALUE = 1004
 class PermissionCheck(private val context: Context, private val owner: Activity){
+
 
     private val permissions = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION,

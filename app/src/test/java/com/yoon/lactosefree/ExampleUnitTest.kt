@@ -1,4 +1,4 @@
-package com.sesac.lactosefree
+package com.yoon.lactosefree
 
 import org.junit.Test
 

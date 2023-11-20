@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.brand.ui
+package com.yoon.lactosefree.brand.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +7,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.sesac.lactosefree.R
-import com.sesac.lactosefree.brand.Brand
+import com.yoon.lactosefree.R
+import com.yoon.lactosefree.brand.Brand
 
 
 class BrandAdapter(private val arrayList: ArrayList<Brand>, private val favoriteVisible : Boolean) :

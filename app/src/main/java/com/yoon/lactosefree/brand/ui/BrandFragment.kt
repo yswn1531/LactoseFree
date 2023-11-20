@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.brand.ui
+package com.yoon.lactosefree.brand.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sesac.lactosefree.R
-import com.sesac.lactosefree.brand.Brand
-import com.sesac.lactosefree.common.ViewBindingBaseFragment
-import com.sesac.lactosefree.databinding.FragmentBrandBinding
+import com.yoon.lactosefree.R
+import com.yoon.lactosefree.brand.Brand
+import com.yoon.lactosefree.common.ViewBindingBaseFragment
+import com.yoon.lactosefree.databinding.FragmentBrandBinding
 
 class BrandFragment : ViewBindingBaseFragment<FragmentBrandBinding>(FragmentBrandBinding::inflate){
 
@@ -21,7 +21,7 @@ class BrandFragment : ViewBindingBaseFragment<FragmentBrandBinding>(FragmentBran
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentBrandBinding.inflate(inflater, container, false)
         return binding.root
     }

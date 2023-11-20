@@ -1,9 +1,9 @@
-package com.sesac.lactosefree.common
+package com.yoon.lactosefree.common
 
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import com.sesac.lactosefree.databinding.DialogMenuBinding
+import com.yoon.lactosefree.databinding.DialogMenuBinding
 
 class CustomDialog(private val message: String,
                    private val context: Context)

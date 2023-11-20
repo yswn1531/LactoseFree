@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.favorite
+package com.yoon.lactosefree.favorite
 
 import androidx.lifecycle.ViewModel
 

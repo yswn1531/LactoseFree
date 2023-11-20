@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.brand
+package com.yoon.lactosefree.brand
 
 data class Detail(
     val kcal : Float,

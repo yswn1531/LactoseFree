@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.brand
+package com.yoon.lactosefree.brand
 
 import androidx.lifecycle.ViewModel
 

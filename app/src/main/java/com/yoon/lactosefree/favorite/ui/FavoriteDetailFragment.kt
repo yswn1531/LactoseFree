@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.favorite.ui
+package com.yoon.lactosefree.favorite.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import com.sesac.lactosefree.R
-import com.sesac.lactosefree.common.ViewBindingBaseFragment
-import com.sesac.lactosefree.databinding.FragmentFavoriteDetailBinding
+import com.yoon.lactosefree.R
+import com.yoon.lactosefree.common.ViewBindingBaseFragment
+import com.yoon.lactosefree.databinding.FragmentFavoriteDetailBinding
 
 class FavoriteDetailFragment : ViewBindingBaseFragment<FragmentFavoriteDetailBinding>(
     FragmentFavoriteDetailBinding::inflate){
@@ -18,7 +18,7 @@ class FavoriteDetailFragment : ViewBindingBaseFragment<FragmentFavoriteDetailBin
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFavoriteDetailBinding.inflate(inflater, container, false)
         return binding.root
     }

@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.brand.ui
+package com.yoon.lactosefree.brand.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,12 +10,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
-import com.sesac.lactosefree.R
-import com.sesac.lactosefree.brand.Brand
-import com.sesac.lactosefree.brand.Detail
-import com.sesac.lactosefree.common.CustomDialog
-import com.sesac.lactosefree.common.ViewBindingBaseFragment
-import com.sesac.lactosefree.databinding.FragmentBrandMenuBinding
+import com.yoon.lactosefree.R
+import com.yoon.lactosefree.brand.Brand
+import com.yoon.lactosefree.brand.Detail
+import com.yoon.lactosefree.common.CustomDialog
+import com.yoon.lactosefree.common.ViewBindingBaseFragment
+import com.yoon.lactosefree.databinding.FragmentBrandMenuBinding
 
 class BrandMenuFragment : ViewBindingBaseFragment<FragmentBrandMenuBinding>(FragmentBrandMenuBinding::inflate){
 

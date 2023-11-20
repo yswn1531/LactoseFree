@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.favorite.ui
+package com.yoon.lactosefree.favorite.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.sesac.lactosefree.R
-import com.sesac.lactosefree.brand.Brand
+import com.yoon.lactosefree.R
+import com.yoon.lactosefree.brand.Brand
 
 class FavoriteAdapter(private val arrayList: ArrayList<Brand>) :
     RecyclerView.Adapter<FavoriteAdapter.ItemHolder>() {

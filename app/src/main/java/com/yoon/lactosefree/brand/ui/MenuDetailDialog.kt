@@ -1,11 +1,11 @@
-package com.sesac.lactosefree.brand.ui
+package com.yoon.lactosefree.brand.ui
 
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import com.sesac.lactosefree.brand.Detail
-import com.sesac.lactosefree.databinding.DialogMenuDetailBinding
+import com.yoon.lactosefree.brand.Detail
+import com.yoon.lactosefree.databinding.DialogMenuDetailBinding
 
 
 class MenuDetailDialog(

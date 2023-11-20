@@ -1,7 +1,7 @@
-package com.sesac.lactosefree.information
+package com.yoon.lactosefree.information
 
 import androidx.lifecycle.ViewModel
 
 class InformationViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+
 }

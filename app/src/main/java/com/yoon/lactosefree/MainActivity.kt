@@ -1,4 +1,4 @@
-package com.sesac.lactosefree
+package com.yoon.lactosefree
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
@@ -7,9 +7,9 @@ import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.sesac.lactosefree.common.PermissionCheck
-import com.sesac.lactosefree.common.PermissionManager
-import com.sesac.lactosefree.databinding.ActivityMainBinding
+import com.yoon.lactosefree.common.PermissionCheck
+import com.yoon.lactosefree.common.PermissionManager
+import com.yoon.lactosefree.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.bottomNavHostContainer) as NavHostFragment? ?: return
         navController = host.navController
-        binding.bottomNav.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination == navController.findDestination(R.id.brandMenuFragment)  ||
                 destination == navController.findDestination(R.id.favoriteDetailFragment)
@@ -40,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                 binding.bottomNav.visibility = View.GONE
             } else binding.bottomNav.visibility = View.VISIBLE
         }
+        binding.bottomNav.setupWithNavController(navController)
     }
 
     private fun permissionCheck() {

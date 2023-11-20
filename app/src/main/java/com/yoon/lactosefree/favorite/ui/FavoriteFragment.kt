@@ -1,4 +1,4 @@
-package com.sesac.lactosefree.favorite.ui
+package com.yoon.lactosefree.favorite.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sesac.lactosefree.R
-import com.sesac.lactosefree.brand.Brand
-import com.sesac.lactosefree.common.ViewBindingBaseFragment
-import com.sesac.lactosefree.databinding.FragmentFavoriteBinding
+import com.yoon.lactosefree.R
+import com.yoon.lactosefree.brand.Brand
+import com.yoon.lactosefree.common.ViewBindingBaseFragment
+import com.yoon.lactosefree.databinding.FragmentFavoriteBinding
 
 class FavoriteFragment : ViewBindingBaseFragment<FragmentFavoriteBinding>(FragmentFavoriteBinding::inflate){
 
@@ -20,7 +20,7 @@ class FavoriteFragment : ViewBindingBaseFragment<FragmentFavoriteBinding>(Fragme
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
