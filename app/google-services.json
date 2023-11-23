@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "952285158061",
+    "project_id": "lactosefree-599b3",
+    "storage_bucket": "lactosefree-599b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952285158061:android:e2faea4a5d7bb04929c424",
+        "android_client_info": {
+          "package_name": "com.yoon.lactosefree"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJl9MhdePV23_lNnEJd4KumGMnRN_BYJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

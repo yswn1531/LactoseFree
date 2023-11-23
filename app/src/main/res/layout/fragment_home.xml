@@ -5,12 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".home.HomeFragment">
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/im_dummy_map"
-        android:scaleType="fitXY"
-        >
-    </com.google.android.material.imageview.ShapeableImageView>
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

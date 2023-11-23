@@ -7,12 +7,16 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.sesac.lactosefree.home.HomeFragment"
+        android:name="com.yoon.lactosefree.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_brandMenuFragment"
+            app:destination="@id/brandMenuFragment" />
+    </fragment>
     <fragment
         android:id="@+id/brandFragment"
-        android:name="com.sesac.lactosefree.brand.ui.BrandFragment"
+        android:name="com.yoon.lactosefree.brand.ui.BrandFragment"
         android:label="fragment_brand"
         tools:layout="@layout/fragment_brand" >
         <action
@@ -21,12 +25,12 @@
     </fragment>
     <fragment
         android:id="@+id/brandMenuFragment"
-        android:name="com.sesac.lactosefree.brand.ui.BrandMenuFragment"
+        android:name="com.yoon.lactosefree.brand.ui.BrandMenuFragment"
         android:label="fragment_brand_menu"
         tools:layout="@layout/fragment_brand_menu" />
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.sesac.lactosefree.favorite.ui.FavoriteFragment"
+        android:name="com.yoon.lactosefree.favorite.ui.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" >
         <action
@@ -35,12 +39,12 @@
     </fragment>
     <fragment
         android:id="@+id/informationFragment"
-        android:name="com.sesac.lactosefree.information.InformationFragment"
+        android:name="com.yoon.lactosefree.information.InformationFragment"
         android:label="fragment_information"
         tools:layout="@layout/fragment_information" />
     <fragment
         android:id="@+id/favoriteDetailFragment"
-        android:name="com.sesac.lactosefree.favorite.ui.FavoriteDetailFragment"
+        android:name="com.yoon.lactosefree.favorite.ui.FavoriteDetailFragment"
         android:label="fragment_favorite_detail"
         tools:layout="@layout/fragment_favorite_detail" />
 
