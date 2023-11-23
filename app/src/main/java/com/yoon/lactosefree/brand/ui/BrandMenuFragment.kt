@@ -47,6 +47,7 @@ class BrandMenuFragment : ViewBindingBaseFragment<FragmentBrandMenuBinding>(Frag
         })
         brandRV.adapter = brandAdapter
 
+
         binding.brandMenuTB.setOnMenuItemClickListener{item ->
             when(item.itemId){
                 R.id.filterCaffeineFree -> {
@@ -68,6 +69,8 @@ class BrandMenuFragment : ViewBindingBaseFragment<FragmentBrandMenuBinding>(Frag
         binding.brandMenuTB.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
+
+
 
         with(binding){
             menuTL.addTab(menuTL.newTab().setText("커피"))

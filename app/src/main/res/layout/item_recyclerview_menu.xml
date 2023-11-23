@@ -27,9 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@id/recyclerImage"
-            android:background="@android:color/transparent"
             android:layout_margin="2dp"
-            android:src="@drawable/ic_favorite_24">
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_favorite_border">
         </androidx.appcompat.widget.AppCompatImageButton>
 
 

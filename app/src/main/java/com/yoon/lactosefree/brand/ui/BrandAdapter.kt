@@ -40,6 +40,17 @@ class BrandAdapter(private val arrayList: ArrayList<Brand>, private val favorite
         itemHolder.names.text = arrayList[position].name
         itemHolder.images.setImageResource(arrayList[position].image)
         if(!favoriteVisible) itemHolder.favoriteButton.visibility = View.GONE
+
+        itemHolder.favoriteButton.setOnClickListener {
+            if(!arrayList[position].favorite){
+                arrayList[position].favorite = true
+                itemHolder.favoriteButton.setImageResource(R.drawable.ic_favorite_24)
+            }
+            else{
+                arrayList[position].favorite = false
+                itemHolder.favoriteButton.setImageResource(R.drawable.ic_favorite_border)
+            }
+        }
     }
 
     override fun getItemCount() = arrayList.size
