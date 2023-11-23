@@ -44,17 +44,6 @@ class BrandFragment : ViewBindingBaseFragment<FragmentBrandBinding>(FragmentBran
 
     private fun setDataInList(): ArrayList<Brand> {
         val items: ArrayList<Brand> = ArrayList()
-        items.add(Brand( "빽다방",R.drawable.im_dummy_back))
-        items.add(Brand( "폴바셋",R.drawable.im_dummy_palubasset))
-        items.add(Brand( "스타벅스",R.drawable.im_dummy_starbucks))
-        items.add(Brand( "빽다방",R.drawable.im_dummy_back))
-        items.add(Brand( "폴바셋",R.drawable.im_dummy_palubasset))
-        items.add(Brand( "스타벅스",R.drawable.im_dummy_starbucks))
-        items.add(Brand( "빽다방",R.drawable.im_dummy_back))
-        items.add(Brand( "폴바셋",R.drawable.im_dummy_palubasset))
-        items.add(Brand( "스타벅스",R.drawable.im_dummy_starbucks))
-        items.add(Brand( "빽다방",R.drawable.im_dummy_back))
-        items.add(Brand( "폴바셋",R.drawable.im_dummy_palubasset))
         items.add(Brand( "스타벅스",R.drawable.im_dummy_starbucks))
         return items
     }

@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.yoon.lactosefree.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_brandMenuFragment"
+            app:destination="@id/brandMenuFragment" />
+    </fragment>
     <fragment
         android:id="@+id/brandFragment"
         android:name="com.yoon.lactosefree.brand.ui.BrandFragment"

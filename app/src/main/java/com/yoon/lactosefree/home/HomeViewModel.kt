@@ -1,12 +1,24 @@
 package com.yoon.lactosefree.home
 
+import android.annotation.SuppressLint
+import android.location.Location
+import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.maps.model.LatLng
+import com.yoon.lactosefree.common.DefaultApplication
 import com.yoon.lactosefree.common.RetrofitOkHttpManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -14,13 +26,19 @@ import kotlinx.coroutines.launch
  * 필요한 데이터
  * 1. 현재 나의 좌표 데이터
  * 2. 현재 나의 좌표 데이터를 넣은 POI 데이터
+ * 3. 브랜드 목록에 있는 값을 어떻게 사용할 것인가?
  *
  * 해야 할 일
  * 1. 현재 나의 좌표 데이터를 얻는 LocationProvider에서 좌표를 받아옴
  * 2. RetrofitOkHttpManager를 통해 flow로 값을 받음
  */
-class HomeViewModel : ViewModel() {
 
+
+class HomeViewModel : ViewModel() {
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var _currentLocationResult = MutableStateFlow<Location?>(null)
+    val currentLocationResult : StateFlow<Location?>
+        get() = _currentLocationResult
 
     //내부에서 사용할 poiFlow
     private var _poiFlow = MutableStateFlow<TMapPOISearchResult?>(null)
@@ -28,27 +46,56 @@ class HomeViewModel : ViewModel() {
     val poiFlow: StateFlow<TMapPOISearchResult?>
         get() = _poiFlow
 
-    init {
-        coroutineFlowSelectPOI()
+    val locationCallback: LocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            super.onLocationResult(locationResult)
+            CoroutineScope(Dispatchers.IO).launch {
+                flow<Location> {
+                    _currentLocationResult.emit(locationResult.locations[0])
+                    coroutineFlowSelectPOI(LatLng(locationResult.locations[0].latitude, locationResult.locations[0].longitude))
+                }.stateIn(CoroutineScope(Dispatchers.IO))
+            }
+        }
     }
 
-    private fun coroutineFlowSelectPOI() {
+    private fun coroutineFlowSelectPOI(latLng: LatLng) {
         RetrofitOkHttpManager.poiCoroutineScope.launch {
             flow<TMapPOISearchResult> {
-                val response =
-                RetrofitOkHttpManager.poiService.coroutineFlowPOIItemSelect(
+                val response = RetrofitOkHttpManager.poiService.coroutineFlowPOIItemSelect(
                     "스타벅스",
-                    37.4724,
-                    126.8961
+                    latLng.latitude,
+                    latLng.longitude
                 )
                 if (response.isSuccessful){
                     _poiFlow.emit(response.body())
                 }else{
-
+                    Log.e("---------","Response Error")
                 }
             }.stateIn(RetrofitOkHttpManager.poiCoroutineScope)
         }
     }
+
+    @SuppressLint("MissingPermission")
+    fun getCurrentLocation(){
+        val locationIntervalTime = 30000L
+        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, locationIntervalTime)
+            .setWaitForAccurateLocation(true)
+            .setMinUpdateIntervalMillis(locationIntervalTime) //위치 획득 후 update 되는 최소 주기
+            .setMaxUpdateDelayMillis(locationIntervalTime).build() //위치 획득 후 update delay 최대 주기
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(DefaultApplication.applicationContext())
+        fusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.getMainLooper()
+        )
+    }
+
+    fun destroyReCallback(){
+        if(::fusedLocationClient.isInitialized){
+            fusedLocationClient.removeLocationUpdates(locationCallback)
+        }
+    }
+
 }
 
 

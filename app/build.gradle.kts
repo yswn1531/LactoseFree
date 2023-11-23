@@ -63,16 +63,17 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.5")
     //LBS
-    implementation("com.google.android.gms:play-services-location:21.0.1")
-    //NaverMap
-    implementation("com.naver.maps:map-sdk:3.17.0")
     //implementation group: 'gun0912.ted', name: 'tedpermission'
     implementation ("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
     //retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     //retrofit - gson
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    //Tmap
+    //workManager
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
+    //googleMap
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
 
 
 }

@@ -7,19 +7,14 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 
 class DefaultApplication: Application() {
-    companion object {
-        private var instance: DefaultApplication? = null
-        fun applicationContext() : DefaultApplication {
-            return instance as DefaultApplication
-        }
-    }
+
     override fun onCreate() {
         super.onCreate()
         instance = this
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             @SuppressLint("SourceLockedOrientationActivity")
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
             }
             override fun onActivityStarted(activity: Activity) {}
             override fun onActivityResumed(activity: Activity) {}
@@ -30,4 +25,9 @@ class DefaultApplication: Application() {
 
         })
     }
+    companion object {
+        private lateinit var instance: DefaultApplication
+        fun applicationContext() = instance
+    }
 }
+

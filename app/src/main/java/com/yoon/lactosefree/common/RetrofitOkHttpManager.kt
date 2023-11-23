@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-const val THREAD_VALUE = 5
+const val THREAD_VALUE = 3
 object RetrofitOkHttpManager {
     private var okHttpClient: OkHttpClient
 
@@ -46,7 +46,8 @@ object RetrofitOkHttpManager {
                 chain.proceed(newRequest)
             }).addInterceptor(RetryInterceptor())
             .connectTimeout(20, TimeUnit.SECONDS)
-            .readTimeout(15, TimeUnit.SECONDS).build()
+            .readTimeout(15, TimeUnit.SECONDS)
+            .build()
         retrofitBuilder.client(okHttpClient) //OkHttp 와 연동
     }
     private class RetryInterceptor : Interceptor {
