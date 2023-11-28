@@ -27,6 +27,12 @@ import com.yoon.lactosefree.databinding.FragmentHomeBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+
+/**
+ * 부족한 부분
+ *  1. 앱을 켰을 때 처음 카메라 위치가 null 값에서 현재 위치로 이동함
+ */
+
 class HomeFragment : ViewBindingBaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
     OnMapReadyCallback, OnInfoWindowClickListener, OnMarkerClickListener {
 
@@ -116,7 +122,8 @@ class HomeFragment : ViewBindingBaseFragment<FragmentHomeBinding>(FragmentHomeBi
     }
 
     override fun onInfoWindowClick(marker: Marker) {
-        val action = HomeFragmentDirections.actionHomeFragmentToBrandMenuFragment()
+        //클릭한 마커 객체의 poiItem의 title의 첫번째
+        val action = HomeFragmentDirections.actionHomeFragmentToBrandMenuFragment("스타벅스")
         findNavController().navigate(action)
     }
 

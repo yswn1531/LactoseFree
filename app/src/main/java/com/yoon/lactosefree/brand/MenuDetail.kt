@@ -1,10 +1,11 @@
 package com.yoon.lactosefree.brand
 
-data class Detail(
+data class MenuDetail(
     val kcal : Float,
-    val salt : Float,
+    val sodium : Float,
     val sugar : Float,
     val fat : Float,
     val protein : Float,
     val caffeine : Float,
+    val includeMilk : Boolean
 )

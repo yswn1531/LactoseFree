@@ -4,18 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.yoon.lactosefree.R
-import com.yoon.lactosefree.brand.Brand
+import com.yoon.lactosefree.brand.BrandViewModel
 import com.yoon.lactosefree.common.ViewBindingBaseFragment
 import com.yoon.lactosefree.databinding.FragmentBrandBinding
+import kotlinx.coroutines.launch
 
+/**
+ * Brand fragment
+ *
+ * 필요한 것
+ * 1. Brand 이름, Brand 이미지
+ */
 class BrandFragment : ViewBindingBaseFragment<FragmentBrandBinding>(FragmentBrandBinding::inflate){
 
-    private var brandList = arrayListOf<Brand>()
-    private var brandAdapter =  BrandAdapter(brandList,false)
+    private val viewModel : BrandViewModel by viewModels()
+    private var brandAdapter =  BrandAdapter(listOf())
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,23 +37,28 @@ class BrandFragment : ViewBindingBaseFragment<FragmentBrandBinding>(FragmentBran
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initRecyclerView()
+
+    }
+
+    private fun initRecyclerView(){
+        viewModel.getBrand()
         val brandRV = binding.brandRV
         brandRV.layoutManager = GridLayoutManager(context,2,LinearLayoutManager.VERTICAL,false)
         brandRV.setHasFixedSize(true)
-        brandList = setDataInList()
-        brandAdapter = BrandAdapter(brandList,false)
-        brandAdapter.setItemClickListener(object : BrandAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
-                val action = BrandFragmentDirections.actionBrandFragmentToBrandMenuFragment()
-                findNavController().navigate(action)
+        viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.brand.collect{
+                    it?.let {
+                        brandAdapter = BrandAdapter(it)
+                        brandAdapter.setItemClickListener(object : BrandAdapter.OnItemClickListener {
+                            override fun onClick(v: View, position: Int) {
+                                val action = BrandFragmentDirections.actionBrandFragmentToBrandMenuFragment(it[position].brandName)
+                                findNavController().navigate(action)
+                            }
+                        })
+                    }
+                }
             }
-        })
         brandRV.adapter = brandAdapter
-    }
-
-    private fun setDataInList(): ArrayList<Brand> {
-        val items: ArrayList<Brand> = ArrayList()
-        items.add(Brand( "스타벅스",R.drawable.im_dummy_starbucks))
-        return items
     }
 }

@@ -23,11 +23,18 @@
             android:id="@+id/action_brandFragment_to_brandMenuFragment"
             app:destination="@id/brandMenuFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/brandMenuFragment"
         android:name="com.yoon.lactosefree.brand.ui.BrandMenuFragment"
         android:label="fragment_brand_menu"
-        tools:layout="@layout/fragment_brand_menu" />
+        tools:layout="@layout/fragment_brand_menu">
+        <argument
+            android:name="brandName"
+            app:argType="string" />
+    </fragment>
+
+
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.yoon.lactosefree.favorite.ui.FavoriteFragment"
@@ -47,6 +54,7 @@
         android:name="com.yoon.lactosefree.favorite.ui.FavoriteDetailFragment"
         android:label="fragment_favorite_detail"
         tools:layout="@layout/fragment_favorite_detail" />
+
 
 
 </navigation>

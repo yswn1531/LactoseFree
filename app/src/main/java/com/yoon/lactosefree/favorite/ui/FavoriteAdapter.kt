@@ -35,8 +35,8 @@ class FavoriteAdapter(private val arrayList: ArrayList<Brand>) :
         itemHolder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
         }
-        itemHolder.names.text = arrayList[position].name
-        itemHolder.images.setImageResource(arrayList[position].image)
+      /*  itemHolder.names.text = arrayList[position].name
+        itemHolder.images.setImageResource(arrayList[position].image)*/
         itemHolder.rating.rating = 3f
 
     }

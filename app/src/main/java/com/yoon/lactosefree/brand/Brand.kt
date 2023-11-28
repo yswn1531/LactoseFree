@@ -1,8 +1,11 @@
 package com.yoon.lactosefree.brand
 
+import android.net.Uri
+
 data class Brand(
-    val name : String,
-    val image : Int,
-    var favorite : Boolean = false
-    //val insteadMilk : List<String>
+    val brandName : String = "",
+    val insteadMilk : List<String> = emptyList(),
+    val brandLogoImage: Uri = Uri.EMPTY,
+    val brandMarkerImage : Uri = Uri.EMPTY
 )
+

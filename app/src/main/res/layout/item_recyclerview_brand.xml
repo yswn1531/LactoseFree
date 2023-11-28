@@ -19,7 +19,7 @@
         android:padding="10dp">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/recyclerImage"
+            android:id="@+id/brandImage"
             android:layout_width="@dimen/brandImageWidth"
             android:layout_height="@dimen/brandImageHeight"
             android:adjustViewBounds="true"
@@ -28,12 +28,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/recyclerName"
+            android:id="@+id/brandName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/bodyTextSize"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintCircle="@id/recyclerImage"
+            app:layout_constraintCircle="@id/brandImage"
             app:layout_constraintCircleAngle="180"
             app:layout_constraintCircleRadius="80dp"
             app:layout_constraintEnd_toEndOf="parent"
