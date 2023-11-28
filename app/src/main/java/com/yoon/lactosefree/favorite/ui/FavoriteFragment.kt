@@ -1,17 +1,10 @@
 package com.yoon.lactosefree.favorite.ui
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.yoon.lactosefree.R
-import com.yoon.lactosefree.brand.Brand
 import com.yoon.lactosefree.common.ViewBindingBaseFragment
 import com.yoon.lactosefree.databinding.FragmentFavoriteBinding
 
 class FavoriteFragment : ViewBindingBaseFragment<FragmentFavoriteBinding>(FragmentFavoriteBinding::inflate){
+/*
 
     private var favoriteList = arrayListOf<Brand>()
     private var favoriteAdapter =  FavoriteAdapter(favoriteList)
@@ -53,5 +46,6 @@ class FavoriteFragment : ViewBindingBaseFragment<FragmentFavoriteBinding>(Fragme
         items.add(Brand( "콜드브루",R.drawable.im_dummy_coldbrew))
         return items
     }
+*/
 
 }

@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.yoon.lactosefree.databinding.DialogMenuBinding
 
 class CustomDialog(private val message: String,
-                   private val context: Context)
+                   context: Context)
     : Dialog(context) {
     private lateinit var dialogBinding: DialogMenuBinding
     override fun onCreate(savedInstanceState: Bundle?) {

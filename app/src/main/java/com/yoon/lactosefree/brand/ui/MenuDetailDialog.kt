@@ -4,12 +4,12 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import com.yoon.lactosefree.brand.Detail
+import com.yoon.lactosefree.brand.MenuDetail
 import com.yoon.lactosefree.databinding.DialogMenuDetailBinding
 
 
 class MenuDetailDialog(
-    private val detail: Detail,
+    private val detail: MenuDetail,
     private val context: Context)
     : Dialog(context) {
 
@@ -27,11 +27,14 @@ class MenuDetailDialog(
         }
         with(dialogBinding){
             kcal.text = detail.kcal.toString()
-            salt.text = detail.salt.toString()
+            salt.text = detail.sodium.toString()
             sugar.text = detail.sugar.toString()
             fat.text = detail.fat.toString()
             protein.text = detail.protein.toString()
             caffeine.text = detail.caffeine.toString()
+            if (detail.includeMilk){
+                noticeMilkText.text = "우유 함유"
+            }
         }
 
     }
