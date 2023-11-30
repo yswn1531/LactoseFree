@@ -151,6 +151,7 @@ class BrandMenuFragment :
 
                     }
                     if (it.isNotEmpty()) {
+                        binding.brandMenuRV.adapter = brandMenuAdapter
                         brandMenuAdapter.addBrandBeverages(it)
                     }
                 }
