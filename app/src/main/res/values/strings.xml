@@ -22,6 +22,9 @@
     <string name="navigationBarItemBrand">Brand</string>
     <string name="navigationBarItemFavorite">Favorite</string>
     <string name="navigationBarItemInfo">Info</string>
+    <string name="updateMode">수정 모드</string>
+    <string name="fireStoreCollectionBrandName">Brand</string>
+    <string name="fireStoreCollectionBeverageName">BrandBeverage</string>
     <string name="googleMapKey">AIzaSyDJl9MhdePV23_lNnEJd4KumGMnRN_BYJM</string>
     <string name="TMapAppKey">uOX0LgYIHy9elyzwrUIDd41Jl14ZTpro2LzQ43B3</string>
 

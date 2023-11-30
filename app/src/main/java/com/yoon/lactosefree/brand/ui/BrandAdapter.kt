@@ -11,11 +11,16 @@ import com.yoon.lactosefree.R
 import com.yoon.lactosefree.brand.Brand
 
 
-class BrandAdapter(private val arrayList: List<Brand>) :
+class BrandAdapter() :
     RecyclerView.Adapter<BrandAdapter.ItemHolder>() {
 
     private lateinit var itemClickListener : OnItemClickListener
+    private lateinit var brandList: List<Brand>
 
+    fun addBrands(items: List<Brand>){
+        brandList = items
+        notifyItemChanged(0, brandList.size - 1)
+    }
 
 
     interface OnItemClickListener {
@@ -35,9 +40,9 @@ class BrandAdapter(private val arrayList: List<Brand>) :
     }
 
     override fun onBindViewHolder(itemHolder: ItemHolder, position: Int) {
-        itemHolder.names.text = arrayList[position].brandName
+        itemHolder.names.text = brandList[position].brandName
         Glide.with(itemHolder.itemView.context)
-            .load(arrayList[position].brandLogoImage)
+            .load(brandList[position].brandLogoImage)
             .into(itemHolder.images)
         itemHolder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
@@ -47,5 +52,5 @@ class BrandAdapter(private val arrayList: List<Brand>) :
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
     }
-    override fun getItemCount() = arrayList.size
+    override fun getItemCount() = brandList.size
 }
