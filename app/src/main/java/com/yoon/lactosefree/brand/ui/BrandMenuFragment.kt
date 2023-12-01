@@ -16,6 +16,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.yoon.lactosefree.brand.BrandViewModel
 import com.yoon.lactosefree.brand.MenuDetail
 import com.yoon.lactosefree.common.CustomDialog
+import com.yoon.lactosefree.common.LoadingDialog
 import com.yoon.lactosefree.common.ViewBindingBaseFragment
 import com.yoon.lactosefree.databinding.FragmentBrandMenuBinding
 import kotlinx.coroutines.launch
@@ -34,6 +35,7 @@ class BrandMenuFragment :
     private val viewModel: BrandViewModel by viewModels()
     private lateinit var categoryList: List<String>
     private val brandArgs: BrandMenuFragmentArgs by navArgs()
+    private lateinit var loading : LoadingDialog
 
     /*
     private var filterCaffeine = false
@@ -54,9 +56,12 @@ class BrandMenuFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loading = LoadingDialog(requireContext())
         viewModel.getIncludeMilk(brandArgs.brandName)
+        loading.show()
         insteadMilkDialog()
         initView()
+
 
         //툴바에 뒤로가기 버튼
         binding.brandMenuTB.setNavigationOnClickListener {
@@ -141,6 +146,7 @@ class BrandMenuFragment :
                         }
                         if (it.isNotEmpty()) {
                             brandMenuAdapter.addBrandBeverages(it)
+                            loading.dismiss()
                         }
                     }
                 }

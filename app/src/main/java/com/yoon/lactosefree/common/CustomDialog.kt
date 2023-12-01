@@ -5,9 +5,8 @@ import android.content.Context
 import android.os.Bundle
 import com.yoon.lactosefree.databinding.DialogMenuBinding
 
-class CustomDialog(private val message: String,
-                   context: Context)
-    : Dialog(context) {
+class CustomDialog(private val message: String, context: Context) : Dialog(context) {
+
     private lateinit var dialogBinding: DialogMenuBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,7 +14,5 @@ class CustomDialog(private val message: String,
             setContentView(it.root)
         }
         dialogBinding.dialogText.text = message
-
     }
-
 }
