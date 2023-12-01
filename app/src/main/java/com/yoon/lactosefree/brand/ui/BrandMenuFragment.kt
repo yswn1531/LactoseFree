@@ -1,14 +1,10 @@
 package com.yoon.lactosefree.brand.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -17,16 +13,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import com.yoon.lactosefree.brand.BrandBeverage
 import com.yoon.lactosefree.brand.BrandViewModel
 import com.yoon.lactosefree.brand.MenuDetail
 import com.yoon.lactosefree.common.CustomDialog
 import com.yoon.lactosefree.common.ViewBindingBaseFragment
 import com.yoon.lactosefree.databinding.FragmentBrandMenuBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 
 /**
@@ -40,7 +31,7 @@ class BrandMenuFragment :
     ViewBindingBaseFragment<FragmentBrandMenuBinding>(FragmentBrandMenuBinding::inflate) {
 
     private lateinit var brandMenuAdapter: BrandMenuAdapter
-    private val viewModel: BrandViewModel by activityViewModels()
+    private val viewModel: BrandViewModel by viewModels()
     private lateinit var categoryList: List<String>
     private val brandArgs: BrandMenuFragmentArgs by navArgs()
 
@@ -50,22 +41,23 @@ class BrandMenuFragment :
     private var filterKcal = false
     */
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentBrandMenuBinding.inflate(inflater, container, false)
+        viewModel.getBrandBeverageImageFromStorage(brandArgs.brandName)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //CustomDialog("대체 우유 : 두유 ",requireContext()).show()
         viewModel.getIncludeMilk(brandArgs.brandName)
         insteadMilkDialog()
-        viewModel.getBrandBeverageImageFromStorage(brandArgs.brandName)
         initView()
+
         //툴바에 뒤로가기 버튼
         binding.brandMenuTB.setNavigationOnClickListener {
             findNavController().popBackStack()
@@ -112,12 +104,10 @@ class BrandMenuFragment :
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tab?.let {
                     if (it.isSelected) {
-                        Log.e("selectTab", "${it.text}")
                         viewModel.getBrandBeverage("${it.text}")
                     }
                 }
             }
-
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
@@ -139,26 +129,22 @@ class BrandMenuFragment :
      */
 
     private fun resultByCategory() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.brandBeverage.collect {
-                it?.let {
-                    if (!::brandMenuAdapter.isInitialized) {
-                        brandMenuAdapter = BrandMenuAdapter()
-                        recyclerItemClickEvent()
-                        favoriteButtonClickEvent()
-                        brandMenuAdapter.addBrandBeverages(emptyList())
-                        binding.brandMenuRV.adapter = brandMenuAdapter
-
-                    }
-                    if (it.isNotEmpty()) {
-                        binding.brandMenuRV.adapter = brandMenuAdapter
-                        brandMenuAdapter.addBrandBeverages(it)
+        lifecycleScope.launch {
+                viewModel.brandBeverage.collect {
+                    it?.let {
+                        if (!::brandMenuAdapter.isInitialized) {
+                            brandMenuAdapter = BrandMenuAdapter()
+                            recyclerItemClickEvent()
+                            favoriteButtonClickEvent()
+                            brandMenuAdapter.addBrandBeverages(emptyList())
+                            binding.brandMenuRV.adapter = brandMenuAdapter
+                        }
+                        if (it.isNotEmpty()) {
+                            brandMenuAdapter.addBrandBeverages(it)
+                        }
                     }
                 }
-            }
-
         }
-
     }
 
 
@@ -194,20 +180,13 @@ class BrandMenuFragment :
             BrandMenuAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
                 if (brandMenuAdapter.getProductList()[position].favorite) {
-                    Log.e("FAVORITE1",brandMenuAdapter.getProductList()[position].favorite.toString())
                     viewModel.deleteFavoriteBeverage(brandMenuAdapter.getProductList()[position].beverageName)
                     brandMenuAdapter.getProductList()[position].favorite = false
                     viewModel.setBrandBeverage(
                         brandMenuAdapter.getProductList()[position].beverageName,
                         false
                     )
-                    /*
-                 *  할일
-                 *  1. 현재 보여지는 값 변경
-                 *  2. RoomDB에 현재 position에 음료의 값들을 가지고 insert
-                 */
                 } else {
-                    Log.e("FAVORITE2",brandMenuAdapter.getProductList()[position].favorite.toString())
                     brandMenuAdapter.getProductList()[position].favorite = true
                     viewModel.insertFavoriteBeverage(brandMenuAdapter.getProductList()[position])
                     viewModel.setBrandBeverage(
@@ -215,7 +194,6 @@ class BrandMenuFragment :
                     )
                 }
             }
-
         })
     }
 
@@ -248,7 +226,6 @@ class BrandMenuFragment :
         lifecycleScope.launch {
             viewModel.brandInsteadMilk.collect { brand ->
                 brand?.let {
-                    Log.e("TEST-DIALOG", "DIALOG")
                     CustomDialog("대체 우유 : ${it[0].insteadMilk}", requireContext()).show()
                 }
             }

@@ -1,10 +1,7 @@
 package com.yoon.lactosefree.brand
 
-import android.annotation.SuppressLint
 import android.net.Uri
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -14,22 +11,15 @@ import com.yoon.lactosefree.common.FIRESTORE_COLLECTION_NAME_BEVERAGE
 import com.yoon.lactosefree.common.FIRESTORE_COLLECTION_NAME_BRAND
 import com.yoon.lactosefree.favorite.Favorite
 import com.yoon.lactosefree.favorite.FavoriteRepository
-import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import java.nio.channels.Channel
 
 
 class BrandViewModel : ViewModel() {
@@ -37,20 +27,17 @@ class BrandViewModel : ViewModel() {
     private val fireStoreDB = Firebase.firestore
     private val fireStoreCollectionNameBrand = FIRESTORE_COLLECTION_NAME_BRAND
     private val fireStoreCollectionNameBrandBeverage = FIRESTORE_COLLECTION_NAME_BEVERAGE
-    private val coroutineScopeIO = CoroutineScope(Dispatchers.IO)
 
+    private val coroutineScopeIO = CoroutineScope(Dispatchers.IO)
     private val coroutineScopeIOBrand = CoroutineScope(Dispatchers.IO)
 
-    val flow : Flow<Boolean> = emptyFlow()
-    val isBrandImageFetched = MutableStateFlow(false)
-    val isBrandBeverageImageFetched = MutableStateFlow(false)
-
-    private val repository: FavoriteRepository =
-        FavoriteRepository(DefaultApplication.applicationContext())
+    private val isBrandImageDownload = MutableStateFlow(false)
+    private val isBrandBeverageImageDownload = MutableStateFlow(false)
 
 
-    private var _brand = MutableLiveData<List<Brand>?>(null)
-    val brand: LiveData<List<Brand>?>
+
+    private var _brand = MutableStateFlow<List<Brand>?>(null)
+    val brand: StateFlow<List<Brand>?>
         get() = _brand
 
     private var _brandBeverage = MutableStateFlow<List<BrandBeverage>?>(null)
@@ -81,57 +68,86 @@ class BrandViewModel : ViewModel() {
 
     private var brandImageMap: MutableMap<String, Uri> = mutableMapOf()
     private var beverageImageMap: MutableMap<String, Uri> = mutableMapOf()
+    private var isDownloadBrandTask : Boolean = false
+    private var isDownloadBeverageTask : Boolean = false
 
     fun getBrandImageFromStorage() {
-        coroutineScopeIOBrand.launch {
-            val pathReference =
-                FirebaseStorage.getInstance().reference.child("Brand/BrandLogo/").listAll().await()
-            val result = coroutineScopeIOBrand.async {
-                pathReference.items.let {
-                    for (item in it) {
-                        item.downloadUrl.addOnSuccessListener {     //이게 비동기라.
-                            brandImageMap[item.name.getOnlyName()] = it
-                        }.addOnFailureListener {
-                            Log.e("STORAGE", "Storage Error")
-                        }.await()
+        if (!isDownloadBrandTask){
+            coroutineScopeIO.launch {
+                val pathReference =
+                    FirebaseStorage.getInstance().reference.child("Brand/BrandLogo/").listAll().await()
+                val result = coroutineScopeIO.async {
+                    pathReference.items.let {
+                        for (item in it) {
+                            item.downloadUrl.addOnSuccessListener {     //이게 비동기라.
+                                brandImageMap[item.name.getOnlyName()] = it
+                            }.addOnFailureListener {
+                                Log.e("STORAGE", "Storage Error")
+                            }.await()
+                        }
                     }
+                    brandImageMap
+                }.await()
+                if (result.isNotEmpty()) {
+                    Log.e("BRAND-IMAGE-GET", "DONE")
+                    isBrandImageDownload.value = true
+                    isDownloadBrandTask = true
                 }
-                brandImageMap
-            }.await()
-            if (result.isNotEmpty()) {
-                Log.e("GET", "DONE")
-                isBrandImageFetched.value = true
             }
         }
     }
 
     fun getBrandBeverageImageFromStorage(brandName: String) {
-        coroutineScopeIOBrand.launch {
-            val pathReference =
-                FirebaseStorage.getInstance().reference.child("Beverage/$brandName/").listAll()
-                    .await()
-            val result = coroutineScopeIOBrand.async {
-                pathReference.items.let {
-                    for (item in it) {
-                        item.downloadUrl.addOnSuccessListener {     //이게 비동기라.
-                            beverageImageMap[item.name.getOnlyName()] = it
-                        }.addOnFailureListener {
-                            Log.e("STORAGE", "Storage Error")
-                        }.await()
+        if (!isDownloadBeverageTask){
+            coroutineScopeIO.launch {
+                val pathReference =
+                    FirebaseStorage.getInstance().reference.child("Beverage/$brandName/").listAll()
+                        .await()
+                val result = coroutineScopeIO.async {
+                    pathReference.items.let {
+                        for (item in it) {
+                            item.downloadUrl.addOnSuccessListener { uri ->//이게 비동기라.
+                                beverageImageMap[item.name.getOnlyName()] = uri
+                            }.addOnFailureListener {
+                                Log.e("STORAGE", "Storage Error")
+                            }.await()
+                        }
                     }
+                    beverageImageMap
+                }.await()
+                if (result.isNotEmpty()) {
+                    isBrandBeverageImageDownload.value = true
+                    isDownloadBeverageTask = true
                 }
-                brandImageMap
-            }.await()
-            if (result.isNotEmpty()) {
-                Log.e("BEVERAGE-GET", "DONE")
-                isBrandBeverageImageFetched.value = true
             }
         }
     }
 
-    init {
-        getBrandImageFromStorage()
+    /**
+     * 해당하는 브랜드 대체우유 정보를 가져오는 함수
+     *
+     * @param brandName
+     */
+    fun getIncludeMilk(brandName: String) {
+        Log.e("STARTMILK", "STARTMILK")
+        val tempList: MutableList<Brand> = mutableListOf()
+        coroutineScopeIO.launch {
+            val docRef: MutableList<GetBrandInfoFromFirebase> =
+                fireStoreDB.collection(fireStoreCollectionNameBrand)
+                    .whereEqualTo("brandName", brandName)
+                    .get().await().toObjects(GetBrandInfoFromFirebase::class.java)
+            for (item in docRef) {
+                tempList.add(
+                    Brand(
+                        brandName = item.brandName,
+                        insteadMilk = item.insteadMilk
+                    )
+                )
+            }
+            _brandInsteadMilk.emit(tempList)
+        }
     }
+
 
     /**
      * Brand에 대한 정보를 얻는 함수
@@ -140,34 +156,30 @@ class BrandViewModel : ViewModel() {
     fun getBrand() {
         Log.e("STARTBRAND", "STARTBRAND")
         coroutineScopeIO.launch {
-            isBrandImageFetched.collect { isFetched ->
-                if (isFetched) {
+            isBrandImageDownload.collect { isDownload ->
+                if (isDownload) {
                     val tempList: MutableList<Brand> = mutableListOf()
                     val docRef: MutableList<GetBrandInfoFromFirebase> =
                         fireStoreDB.collection(fireStoreCollectionNameBrand)
                             .get().await().toObjects(GetBrandInfoFromFirebase::class.java)
                     val result = coroutineScopeIO.async {
-                        Log.e("STARTGET", "STARTGET")
                         for (data in docRef) {
                             for (mapItem in brandImageMap) {
                                 if (data.brandName == mapItem.key) {
-                                    Log.e("INPUT", "${data.brandName} , ${mapItem.key}")
                                     tempList.add(
                                         Brand(
                                             brandName = data.brandName,
                                             brandLogoImage = mapItem.value
                                         )
                                     )
-                                } else {
-                                    Log.e("OUTPUT", "${data.brandName} , ${mapItem.key}")
                                 }
                             }
                         }
                         tempList
                     }.await()
                     if (result.isNotEmpty()) {
-                        Log.e("EMIT", "EMIT")
-                        _brand.postValue(result)
+                        _brand.emit(result)
+                        Log.e("EMIT-BRAND", "EMIT-BRAND")
                     }
                 }
             }
@@ -208,49 +220,6 @@ class BrandViewModel : ViewModel() {
 
 
     /**
-     * favorite 여부 변경 함수
-     *
-     * @param brandBeverageName
-     * @param boolean
-     */
-    fun setBrandBeverage(brandBeverageName: String, boolean: Boolean) {
-        coroutineScopeIO.launch {
-            val docRef = fireStoreDB.collection(fireStoreCollectionNameBrandBeverage)
-                .document(brandBeverageName)
-            docRef.update("favorite", boolean)
-                .addOnSuccessListener { Log.d("TAG", "DocumentSnapshot successfully updated!") }
-                .addOnFailureListener { Log.d("TAG", "DocumentSnapshot successfully updated!") }
-        }
-    }
-
-
-    /**
-     * 해당하는 브랜드 대체우유 정보를 가져오는 함수
-     *
-     * @param brandName
-     */
-    fun getIncludeMilk(brandName: String) {
-        Log.e("STARTMILK", "STARTMILK")
-        val tempList: MutableList<Brand> = mutableListOf()
-        coroutineScopeIO.launch {
-            val docRef: MutableList<GetBrandInfoFromFirebase> =
-                fireStoreDB.collection(fireStoreCollectionNameBrand)
-                    .whereEqualTo("brandName", brandName)
-                    .get().await().toObjects(GetBrandInfoFromFirebase::class.java)
-            for (item in docRef) {
-                tempList.add(
-                    Brand(
-                        brandName = item.brandName,
-                        insteadMilk = item.insteadMilk
-                    )
-                )
-            }
-            Log.e("MILKVM", "MILKVM")
-            _brandInsteadMilk.emit(tempList)
-        }
-    }
-
-    /**
      * 해당하는 브랜드의 음료를 탭에 맞게 불러오는 함수
      *
      * @param brandName 해당하는 브랜드 이름
@@ -259,8 +228,9 @@ class BrandViewModel : ViewModel() {
     fun getBrandBeverage(category: String) {
         Log.e("STARTBEVERAGE", "STARTBEVERAGE")
         coroutineScopeIO.launch {
-            isBrandBeverageImageFetched.collect { isFetched ->
-                if (isFetched){
+            isBrandBeverageImageDownload.collect { isDownload ->
+                Log.e("isDownload-COLLECT", isDownload.toString())
+                if (isDownload){
                     val tempList: MutableList<BrandBeverage> = mutableListOf()
                     val docRef: MutableList<GetBrandBeverageInfoFromFirebase> = fireStoreDB
                         .collection(fireStoreCollectionNameBrandBeverage)
@@ -293,7 +263,9 @@ class BrandViewModel : ViewModel() {
                     }.await()
                     if (result.isNotEmpty()) {
                         Log.e("BEVERAGE-EMIT", "BEVERAGE-EMIT")
-                        _brandBeverage.emit(tempList)
+                        flow<List<BrandBeverage>?> {
+                            _brandBeverage.emit(tempList)
+                        }.stateIn(coroutineScopeIOBrand)
                     }
                 }
             }
@@ -322,90 +294,26 @@ class BrandViewModel : ViewModel() {
     }
 
 
-    /*fun getBrandBeverageOrderByCaffeine(brandName : String, category :String){
-        val tempList : MutableList<BrandBeverage> = mutableListOf()
-        val storage = FirebaseStorage.getInstance()
-        val storageRef = storage.reference
-        CoroutineScope(Dispatchers.IO).launch{
-            val docRef: MutableList<GetBrandBeverageInfoFromFirebase> = fireStoreDB
-                .collection(fireStoreCollectionNameBrandBeverage)
-                .whereEqualTo("beverageCategory", category)
-                .whereEqualTo("beverageCaffeine", 0)
-                .get().await().toObjects(GetBrandBeverageInfoFromFirebase::class.java)
-            for (item in docRef){
-                Log.e("testItem",item.beverageName)
-                val pathReference = storageRef.child("Beverage/${brandName}/${item.beverageName}.png")
-                pathReference.downloadUrl
-                    .addOnSuccessListener {imageUri ->
-                        Log.e("TagVM","sucees")
-                        tempList.add(
-                            BrandBeverage(
-                                brandName = item.brandName,
-                                beverageName = item.beverageName,
-                                beverageCategory = item.beverageCategory,
-                                beverageKcal = item.beverageKcal,
-                                beverageCaffeine = item.beverageCaffeine,
-                                beverageFat = item.beverageFat,
-                                beverageProtein = item.beverageProtein,
-                                beverageSodium = item.beverageSodium,
-                                beverageSugar = item.beverageSugar,
-                                beverageImage = imageUri,
-                                favorite = item.favorite,
-                                includeMilk = item.includeMilk
-                            )
-                        )
-                    }.addOnCanceledListener {
-                        Log.e("GetBrand","failed")
-                    }
-            }
-            flow<BrandBeverage> {
-                _brandBeverageOrderByCaffeine.emit(tempList)
-            }.stateIn(CoroutineScope(Dispatchers.IO))
+
+
+    /**
+     * favorite 여부 변경 함수
+     *
+     * @param brandBeverageName
+     * @param boolean
+     */
+    fun setBrandBeverage(brandBeverageName: String, boolean: Boolean) {
+        coroutineScopeIO.launch {
+            val docRef = fireStoreDB.collection(fireStoreCollectionNameBrandBeverage)
+                .document(brandBeverageName)
+            docRef.update("favorite", boolean)
+                .addOnSuccessListener { Log.d("TAG", "DocumentSnapshot successfully updated!") }
+                .addOnFailureListener { Log.d("TAG", "DocumentSnapshot successfully updated!") }
         }
     }
 
-    fun getBrandBeverageOrderBySugar(brandName : String, category :String){
-        val tempList : MutableList<BrandBeverage> = mutableListOf()
-        val storage = FirebaseStorage.getInstance()
-        val storageRef = storage.reference
-        CoroutineScope(Dispatchers.IO).launch{
-            val docRef: MutableList<GetBrandBeverageInfoFromFirebase> = fireStoreDB
-                .collection(fireStoreCollectionNameBrandBeverage)
-                .whereEqualTo("beverageCategory", category)
-                .whereEqualTo("beverageCaffeine", 0)
-                .get().await().toObjects(GetBrandBeverageInfoFromFirebase::class.java)
-            for (item in docRef){
-                Log.e("testItem",item.beverageName)
-                val pathReference = storageRef.child("Beverage/${brandName}/${item.beverageName}.png")
-                pathReference.downloadUrl
-                    .addOnSuccessListener {imageUri ->
-                        Log.e("TagVM","sucees")
-                        tempList.add(
-                            BrandBeverage(
-                                brandName = item.brandName,
-                                beverageName = item.beverageName,
-                                beverageCategory = item.beverageCategory,
-                                beverageKcal = item.beverageKcal,
-                                beverageCaffeine = item.beverageCaffeine,
-                                beverageFat = item.beverageFat,
-                                beverageProtein = item.beverageProtein,
-                                beverageSodium = item.beverageSodium,
-                                beverageSugar = item.beverageSugar,
-                                beverageImage = imageUri,
-                                favorite = item.favorite,
-                                includeMilk = item.includeMilk
-                            )
-                        )
-                    }.addOnCanceledListener {
-                        Log.e("GetBrand","failed")
-                    }
-            }
-            flow<BrandBeverage> {
-                _brandBeverageOrderBySugar.emit(tempList)
-            }.stateIn(CoroutineScope(Dispatchers.IO))
-        }
-    }*/
-
+    private val repository: FavoriteRepository =
+        FavoriteRepository(DefaultApplication.applicationContext())
 
     /**
      *  Favorite Image Button 클릭시 브랜드 이미지,
@@ -419,27 +327,96 @@ class BrandViewModel : ViewModel() {
                 imageUri = beverage.beverageImage
             )
         )
-        /**
-         *
-         * insertFavorite(
-         *      Favorite(
-         *      beverage.brandName = ""
-         *      beverage.beverageName = ""
-         *      raiting detail에서 수정
-         *      content detail에서 수정
-         *      )
-         *  )
-         */
     }
 
     fun deleteFavoriteBeverage(beverageName: String) {
         repository.deleteFavorite(beverageName)
-        /**
-         *  deleteFavorite(beverageName)
-         */
     }
 
 
+    /*fun getBrandBeverageOrderByCaffeine(brandName : String, category :String){
+      val tempList : MutableList<BrandBeverage> = mutableListOf()
+      val storage = FirebaseStorage.getInstance()
+      val storageRef = storage.reference
+      CoroutineScope(Dispatchers.IO).launch{
+          val docRef: MutableList<GetBrandBeverageInfoFromFirebase> = fireStoreDB
+              .collection(fireStoreCollectionNameBrandBeverage)
+              .whereEqualTo("beverageCategory", category)
+              .whereEqualTo("beverageCaffeine", 0)
+              .get().await().toObjects(GetBrandBeverageInfoFromFirebase::class.java)
+          for (item in docRef){
+              Log.e("testItem",item.beverageName)
+              val pathReference = storageRef.child("Beverage/${brandName}/${item.beverageName}.png")
+              pathReference.downloadUrl
+                  .addOnSuccessListener {imageUri ->
+                      Log.e("TagVM","sucees")
+                      tempList.add(
+                          BrandBeverage(
+                              brandName = item.brandName,
+                              beverageName = item.beverageName,
+                              beverageCategory = item.beverageCategory,
+                              beverageKcal = item.beverageKcal,
+                              beverageCaffeine = item.beverageCaffeine,
+                              beverageFat = item.beverageFat,
+                              beverageProtein = item.beverageProtein,
+                              beverageSodium = item.beverageSodium,
+                              beverageSugar = item.beverageSugar,
+                              beverageImage = imageUri,
+                              favorite = item.favorite,
+                              includeMilk = item.includeMilk
+                          )
+                      )
+                  }.addOnCanceledListener {
+                      Log.e("GetBrand","failed")
+                  }
+          }
+          flow<BrandBeverage> {
+              _brandBeverageOrderByCaffeine.emit(tempList)
+          }.stateIn(CoroutineScope(Dispatchers.IO))
+      }
+  }
+
+  fun getBrandBeverageOrderBySugar(brandName : String, category :String){
+      val tempList : MutableList<BrandBeverage> = mutableListOf()
+      val storage = FirebaseStorage.getInstance()
+      val storageRef = storage.reference
+      CoroutineScope(Dispatchers.IO).launch{
+          val docRef: MutableList<GetBrandBeverageInfoFromFirebase> = fireStoreDB
+              .collection(fireStoreCollectionNameBrandBeverage)
+              .whereEqualTo("beverageCategory", category)
+              .whereEqualTo("beverageCaffeine", 0)
+              .get().await().toObjects(GetBrandBeverageInfoFromFirebase::class.java)
+          for (item in docRef){
+              Log.e("testItem",item.beverageName)
+              val pathReference = storageRef.child("Beverage/${brandName}/${item.beverageName}.png")
+              pathReference.downloadUrl
+                  .addOnSuccessListener {imageUri ->
+                      Log.e("TagVM","sucees")
+                      tempList.add(
+                          BrandBeverage(
+                              brandName = item.brandName,
+                              beverageName = item.beverageName,
+                              beverageCategory = item.beverageCategory,
+                              beverageKcal = item.beverageKcal,
+                              beverageCaffeine = item.beverageCaffeine,
+                              beverageFat = item.beverageFat,
+                              beverageProtein = item.beverageProtein,
+                              beverageSodium = item.beverageSodium,
+                              beverageSugar = item.beverageSugar,
+                              beverageImage = imageUri,
+                              favorite = item.favorite,
+                              includeMilk = item.includeMilk
+                          )
+                      )
+                  }.addOnCanceledListener {
+                      Log.e("GetBrand","failed")
+                  }
+          }
+          flow<BrandBeverage> {
+              _brandBeverageOrderBySugar.emit(tempList)
+          }.stateIn(CoroutineScope(Dispatchers.IO))
+      }
+  }*/
 }
 
 data class GetBrandInfoFromFirebase(
