@@ -53,7 +53,14 @@
         android:id="@+id/favoriteDetailFragment"
         android:name="com.yoon.lactosefree.favorite.ui.FavoriteDetailFragment"
         android:label="fragment_favorite_detail"
-        tools:layout="@layout/fragment_favorite_detail" />
+        tools:layout="@layout/fragment_favorite_detail" >
+        <argument
+            android:name="brandName"
+            app:argType="string" />
+        <argument
+            android:name="beverageName"
+            app:argType="string" />
+    </fragment>
 
 
 

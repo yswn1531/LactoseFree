@@ -3,6 +3,7 @@ plugins {
     id ("org.jetbrains.kotlin.android")
     id ("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
+    id ("kotlin-kapt")
 }
 
 android {
@@ -75,7 +76,11 @@ dependencies {
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
     implementation ("com.google.android.gms:play-services-location:21.0.1")
     //glide
-    implementation ("com.github.bumptech.glide:glide:4.13.0")
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
+    //RoomDB
+    implementation ("androidx.room:room-runtime:2.6.0")
+    kapt ("androidx.room:room-compiler:2.6.0")
+
 
 
 }

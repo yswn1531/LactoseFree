@@ -37,7 +37,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_arrow_back_24"
-        app:title="에스프레소"
         app:titleTextColor="?attr/colorOnSurface" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -83,7 +82,6 @@
         app:layout_constraintStart_toStartOf="@id/glFavoriteDetailStart"
         app:layout_constraintTop_toBottomOf="@id/favoriteDetailRatingBar"      android:background="@drawable/style_menu_tab"
         android:gravity="top"
-        android:enabled="false"
         />
 
 

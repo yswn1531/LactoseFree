@@ -12,19 +12,25 @@ import com.bumptech.glide.Glide
 import com.yoon.lactosefree.R
 import com.yoon.lactosefree.brand.Brand
 import com.yoon.lactosefree.brand.BrandBeverage
+import com.yoon.lactosefree.favorite.Favorite
 
 
-class BrandMenuAdapter(private var arrayList: MutableList<BrandBeverage>) :
+class BrandMenuAdapter() :
     RecyclerView.Adapter<BrandMenuAdapter.ItemHolder>() {
 
     private lateinit var itemClickListener : OnItemClickListener
     private lateinit var favoriteClickListener : OnItemClickListener
-    var getList = arrayList
+    private lateinit var brandBeverageList: List<BrandBeverage>
+
 
     interface OnItemClickListener {
         fun onClick(v: View, position: Int)
     }
 
+    fun addBrandBeverages(items: List<BrandBeverage>){
+        brandBeverageList = items
+        notifyItemChanged(0, brandBeverageList.size - 1)
+    }
 
 
     inner class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -42,22 +48,21 @@ class BrandMenuAdapter(private var arrayList: MutableList<BrandBeverage>) :
     }
 
     override fun onBindViewHolder(itemHolder: ItemHolder, position: Int) {
-        itemHolder.names.text = arrayList[position].beverageName
+        itemHolder.names.text = brandBeverageList[position].beverageName
         Glide.with(itemHolder.itemView.context)
-            .load(arrayList[position].beverageImage)
+            .load(brandBeverageList[position].beverageImage)
             .into(itemHolder.images)
+
         //itemView 클릭이벤트
         itemHolder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
         }
-        if (arrayList[position].favorite == true){
-            itemHolder.favoriteButton.setImageResource(R.drawable.ic_favorite_24)
-        }else{
-            itemHolder.favoriteButton.setImageResource(R.drawable.ic_favorite_border)
-        }
 
+        initFavoriteButton(itemHolder, position)
+
+        //favoriteButton 클릭이벤트
         itemHolder.favoriteButton.setOnClickListener {
-            if(arrayList[position].favorite == false){
+            if(brandBeverageList[position].favorite == false){
                 itemHolder.favoriteButton.setImageResource(R.drawable.ic_favorite_24)
             }
             else{
@@ -68,7 +73,7 @@ class BrandMenuAdapter(private var arrayList: MutableList<BrandBeverage>) :
     }
 
 
-    override fun getItemCount() = arrayList.size
+
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
@@ -77,9 +82,18 @@ class BrandMenuAdapter(private var arrayList: MutableList<BrandBeverage>) :
         this.favoriteClickListener = onFavoriteClickListener
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setBrandBeverageList(brandBeverage: List<BrandBeverage>) {
-        arrayList = brandBeverage.toMutableList()
-        notifyDataSetChanged()
+    private fun initFavoriteButton(itemHolder: ItemHolder, position: Int){
+        if (brandBeverageList[position].favorite == true){
+            itemHolder.favoriteButton.setImageResource(R.drawable.ic_favorite_24)
+        }else{
+            itemHolder.favoriteButton.setImageResource(R.drawable.ic_favorite_border)
+        }
     }
+
+    fun getProductList() : List<BrandBeverage>{
+        return brandBeverageList
+    }
+
+    override fun getItemCount() =  brandBeverageList.size
+
 }

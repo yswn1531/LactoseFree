@@ -8,14 +8,11 @@
         app:showAsAction="always">
         <menu>
             <item android:id="@+id/filterCaffeineFree"
-                android:title="카페인 프리"
-                android:checkable="true"/>
+                android:title="카페인 프리" />
             <item android:id="@+id/filterLowSugar"
-                android:title="저당"
-                android:checkable="true"/>
+                android:title="저당" />
             <item android:id="@+id/filterLowKcal"
-                android:title="저칼로리"
-                android:checkable="true"/>
+                android:title="저칼로리" />
         </menu>
     </item>
 

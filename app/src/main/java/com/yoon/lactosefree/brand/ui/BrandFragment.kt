@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,13 +19,11 @@ import kotlinx.coroutines.launch
 /**
  * Brand fragment
  *
- * 필요한 것
- * 1. Brand 이름, Brand 이미지
  */
-class BrandFragment : ViewBindingBaseFragment<FragmentBrandBinding>(FragmentBrandBinding::inflate){
+class BrandFragment : ViewBindingBaseFragment<FragmentBrandBinding>(FragmentBrandBinding::inflate) {
 
-    private val viewModel : BrandViewModel by viewModels()
-    private var brandAdapter =  BrandAdapter(listOf())
+    private val viewModel: BrandViewModel by viewModels()
+    private lateinit var brandAdapter: BrandAdapter
 
 
     override fun onCreateView(
@@ -37,28 +37,42 @@ class BrandFragment : ViewBindingBaseFragment<FragmentBrandBinding>(FragmentBran
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getBrandImageFromStorage()
+        viewModel.getBrand()
         initRecyclerView()
-
     }
 
-    private fun initRecyclerView(){
-        viewModel.getBrand()
+
+    private fun initRecyclerView() {
         val brandRV = binding.brandRV
-        brandRV.layoutManager = GridLayoutManager(context,2,LinearLayoutManager.VERTICAL,false)
-        brandRV.setHasFixedSize(true)
+        brandRV.layoutManager = GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
+        //brandRV.setHasFixedSize(true)
         viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED){
                 viewModel.brand.collect{
                     it?.let {
-                        brandAdapter = BrandAdapter(it)
-                        brandAdapter.setItemClickListener(object : BrandAdapter.OnItemClickListener {
-                            override fun onClick(v: View, position: Int) {
-                                val action = BrandFragmentDirections.actionBrandFragmentToBrandMenuFragment(it[position].brandName)
-                                findNavController().navigate(action)
-                            }
-                        })
+                        if (!::brandAdapter.isInitialized) {
+                            brandAdapter = BrandAdapter()
+                            brandAdapter.addBrands(emptyList())
+                            brandRV.adapter = brandAdapter
+                            brandAdapter.setItemClickListener(object :
+                                BrandAdapter.OnItemClickListener {
+                                override fun onClick(v: View, position: Int) {
+                                    val action =
+                                        BrandFragmentDirections.actionBrandFragmentToBrandMenuFragment(
+                                            it[position].brandName
+                                        )
+                                    findNavController().navigate(action)
+                                }
+                            })
+                        }
+                        if (it.isNotEmpty()) {
+                            brandAdapter.addBrands(it)
+                            binding.brandRV.adapter = brandAdapter
+                        }
                     }
                 }
             }
-        brandRV.adapter = brandAdapter
+        }
     }
 }
