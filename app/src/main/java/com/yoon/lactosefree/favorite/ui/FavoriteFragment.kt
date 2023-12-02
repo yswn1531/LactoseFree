@@ -29,16 +29,15 @@ class FavoriteFragment : ViewBindingBaseFragment<FragmentFavoriteBinding>(Fragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observerSetup()
         initRecyclerView()
+        observerSetup()
     }
 
     private fun observerSetup(){
         viewModel.getAllResult()?.observe(viewLifecycleOwner){favorite ->
             favorite?.let {
-                if (::favoriteAdapter.isInitialized){
+                    Log.e("SET-RESULT", it.toString())
                     favoriteAdapter.setProductList(it)
-                }
             }
         }
     }
@@ -48,6 +47,7 @@ class FavoriteFragment : ViewBindingBaseFragment<FragmentFavoriteBinding>(Fragme
             favoriteAdapter = FavoriteAdapter()
             favoriteAdapter.setProductList(emptyList())
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = favoriteAdapter
             favoriteAdapter.setItemClickListener(object : FavoriteAdapter.OnItemClickListener {
                 override fun onClick(v: View, position: Int) {
                     val brandNameArgs = favoriteAdapter.getProductList()[position].brandName
@@ -57,10 +57,7 @@ class FavoriteFragment : ViewBindingBaseFragment<FragmentFavoriteBinding>(Fragme
                     findNavController().navigate(action)
                 }
             })
-            adapter = favoriteAdapter
+
         }
     }
-
-
-
 }
