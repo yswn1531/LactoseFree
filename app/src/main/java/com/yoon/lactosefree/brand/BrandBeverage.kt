@@ -7,6 +7,7 @@ data class BrandBeverage(
     val beverageName: String = "",
     val beverageImage: Uri = Uri.EMPTY,
     val beverageCategory: String = "",
+    val beverageSize : Int = 0,
     val beverageKcal: Float = 0.0f,
     val beverageProtein: Float = 0.0f,
     val beverageSugar: Float = 0.0f,

@@ -222,7 +222,6 @@ class BrandViewModel : ViewModel() {
     /**
      * 해당하는 브랜드의 음료를 탭에 맞게 불러오는 함수
      *
-     * @param brandName 해당하는 브랜드 이름
      * @param category  탭을 눌렀을 때 카테고리
      */
     fun getBrandBeverage(category: String) {
@@ -245,6 +244,7 @@ class BrandViewModel : ViewModel() {
                                             brandName = beverages.brandName,
                                             beverageName = beverages.beverageName,
                                             beverageCategory = beverages.beverageCategory,
+                                            beverageSize = beverages.beverageSize,
                                             beverageKcal = beverages.beverageKcal,
                                             beverageCaffeine = beverages.beverageCaffeine,
                                             beverageFat = beverages.beverageFat,
@@ -258,6 +258,9 @@ class BrandViewModel : ViewModel() {
                                     )
                                 }
                             }
+                        }
+                        tempList.forEach {
+                            Log.e("LIST",it.beverageName)
                         }
                         tempList
                     }.await()
@@ -428,6 +431,7 @@ data class GetBrandBeverageInfoFromFirebase(
     val brandName: String = "",
     val beverageName: String = "",
     val beverageCategory: String = "",
+    val beverageSize: Int = 0,
     val beverageKcal: Float = 0.0f,
     val beverageProtein: Float = 0.0f,
     val beverageSugar: Float = 0.0f,

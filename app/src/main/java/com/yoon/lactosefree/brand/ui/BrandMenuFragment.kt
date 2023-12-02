@@ -58,10 +58,9 @@ class BrandMenuFragment :
         super.onViewCreated(view, savedInstanceState)
         loading = LoadingDialog(requireContext())
         viewModel.getIncludeMilk(brandArgs.brandName)
-        loading.show()
         insteadMilkDialog()
         initView()
-
+        //loading.show()
 
         //툴바에 뒤로가기 버튼
         binding.brandMenuTB.setNavigationOnClickListener {
@@ -146,7 +145,7 @@ class BrandMenuFragment :
                         }
                         if (it.isNotEmpty()) {
                             brandMenuAdapter.addBrandBeverages(it)
-                            loading.dismiss()
+                            //loading.dismiss()
                         }
                     }
                 }
@@ -164,6 +163,7 @@ class BrandMenuFragment :
                 val getBeverage = brandMenuAdapter.getProductList()[position]
                 MenuDetailDialog(
                     MenuDetail(
+                        getBeverage.beverageSize,
                         getBeverage.beverageKcal,
                         getBeverage.beverageSodium,
                         getBeverage.beverageSugar,
