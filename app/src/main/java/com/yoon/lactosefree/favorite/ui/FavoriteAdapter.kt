@@ -23,8 +23,14 @@ class FavoriteAdapter() :
     }
 
     fun setProductList(favorites: List<Favorite>){
-        favoriteList = favorites
-        notifyItemChanged(0, favorites.size - 1)
+        if (favorites.isNotEmpty()){
+            favoriteList = favorites
+            notifyItemChanged(0, favorites.size - 1)
+        }else {
+            favoriteList = emptyList()
+            notifyItemChanged(0)
+        }
+
     }
 
     inner class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -33,7 +39,6 @@ class FavoriteAdapter() :
         var beverageName: TextView = itemView.findViewById<TextView>(R.id.favoriteName)
         var rating : RatingBar = itemView.findViewById(R.id.favoriteRating)
     }
-
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ItemHolder {
@@ -46,8 +51,6 @@ class FavoriteAdapter() :
         itemHolder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
         }
-      /*  itemHolder.names.text = arrayList[position].name
-        itemHolder.images.setImageResource(arrayList[position].image)*/
         favoriteList.let { list ->
             itemHolder.brand.text = list[position].brandName
             itemHolder.beverageName.text = list[position].brandBeverageName
