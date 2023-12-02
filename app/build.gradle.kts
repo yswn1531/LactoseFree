@@ -82,7 +82,8 @@ dependencies {
     kapt ("androidx.room:room-compiler:2.6.0")
     //lottie
     implementation ("com.airbnb.android:lottie:6.2.0")
-
+    //Splash
+    implementation ("androidx.core:core-splashscreen:1.0.1")
 
 
 }
