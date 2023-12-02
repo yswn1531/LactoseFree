@@ -15,6 +15,8 @@ import com.yoon.lactosefree.brand.BrandViewModel
 import com.yoon.lactosefree.common.LoadingDialog
 import com.yoon.lactosefree.common.ViewBindingBaseFragment
 import com.yoon.lactosefree.databinding.FragmentBrandBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
@@ -42,10 +44,8 @@ class BrandFragment : ViewBindingBaseFragment<FragmentBrandBinding>(FragmentBran
         viewModel.getBrandImageFromStorage()
         loading = LoadingDialog(requireContext())
         viewModel.getBrand()
-        loading.show()
         initRecyclerView()
-
-
+        //loading.show()
     }
 
 
@@ -74,8 +74,7 @@ class BrandFragment : ViewBindingBaseFragment<FragmentBrandBinding>(FragmentBran
                         }
                         if (it.isNotEmpty()) {
                             brandAdapter.addBrands(it)
-                            binding.brandRV.adapter = brandAdapter
-                            loading.dismiss()
+                            //loading.dismiss()
                         }
                     }
                 }

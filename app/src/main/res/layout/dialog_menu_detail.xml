@@ -21,6 +21,26 @@
         android:textSize="@dimen/subTitleTextSize"
         />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/sizeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="@dimen/bodyTextSize"
+        android:text="@string/size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/noticeMilkText" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@id/sizeText"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="@dimen/bodyTextSize"/>
+
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/kcalText"
@@ -28,9 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textSize="@dimen/bodyTextSize"
-        android:text="칼로리"
+        android:text="@string/kcal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noticeMilkText" />
+        app:layout_constraintTop_toBottomOf="@+id/sizeText" />
 
 
     <com.google.android.material.textview.MaterialTextView
@@ -48,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textSize="@dimen/bodyTextSize"
-        android:text="나트륨"
+        android:text="@string/sodium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/kcalText"
         />
@@ -69,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textSize="@dimen/bodyTextSize"
-        android:text="당류"
+        android:text="@string/sugar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/saltText"
         />
@@ -90,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textSize="@dimen/bodyTextSize"
-        android:text="포화 지방"
+        android:text="@string/fat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sugarText"
         />
@@ -113,7 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textSize="@dimen/bodyTextSize"
-        android:text="단백질"
+        android:text="@string/protein"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fatText"
         />
@@ -134,7 +154,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="카페인"
+        android:text="@string/caffeine"
         android:textSize="@dimen/bodyTextSize"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"

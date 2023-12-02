@@ -26,6 +26,7 @@ class MenuDetailDialog(
             setContentView(it.root)
         }
         with(dialogBinding){
+            size.text = detail.size.toString()
             kcal.text = detail.kcal.toString()
             salt.text = detail.sodium.toString()
             sugar.text = detail.sugar.toString()

@@ -26,6 +26,13 @@
     <string name="fireStoreCollectionBrandName">Brand</string>
     <string name="fireStoreCollectionBeverageName">BrandBeverage</string>
     <string name="googleMapKey">AIzaSyDJl9MhdePV23_lNnEJd4KumGMnRN_BYJM</string>
-    <string name="TMapAppKey">uOX0LgYIHy9elyzwrUIDd41Jl14ZTpro2LzQ43B3</string>
+    <string name="size">제공량 (ml)</string>
+    <string name="kcal">칼로리 (kcal)</string>
+    <string name="sodium">나트륨 (mg)</string>
+    <string name="sugar">당류 (g)</string>
+    <string name="fat">포화 지방 (g)</string>
+    <string name="protein">단백질 (g)</string>
+    <string name="caffeine">카페인 (mg)</string>
+
 
 </resources>
