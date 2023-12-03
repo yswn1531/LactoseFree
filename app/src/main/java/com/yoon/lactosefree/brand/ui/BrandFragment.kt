@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -25,8 +26,8 @@ import kotlinx.coroutines.launch
  */
 class BrandFragment : ViewBindingBaseFragment<FragmentBrandBinding>(FragmentBrandBinding::inflate) {
 
-    private val viewModel: BrandViewModel by viewModels()
-    private lateinit var loading : LoadingDialog
+    private val viewModel: BrandViewModel by activityViewModels()
+    private lateinit var loading: LoadingDialog
     private lateinit var brandAdapter: BrandAdapter
 
 
@@ -45,40 +46,35 @@ class BrandFragment : ViewBindingBaseFragment<FragmentBrandBinding>(FragmentBran
         loading = LoadingDialog(requireContext())
         viewModel.getBrand()
         initRecyclerView()
+        collectResult()
         //loading.show()
     }
 
-
     private fun initRecyclerView() {
-        val brandRV = binding.brandRV
-        brandRV.layoutManager = GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
-        //brandRV.setHasFixedSize(true)
+        with(binding.brandRV){
+            layoutManager = GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
+            brandAdapter = BrandAdapter {
+                val action =
+                    BrandFragmentDirections.actionBrandFragmentToBrandMenuFragment(
+                        it.brandName
+                    )
+                findNavController().navigate(action)
+            }
+            adapter = brandAdapter
+        }
+
+    }
+
+    private fun collectResult(){
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED){
-                viewModel.brand.collect{
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.brand.collect {
                     it?.let {
-                        if (!::brandAdapter.isInitialized) {
-                            brandAdapter = BrandAdapter()
-                            brandAdapter.addBrands(emptyList())
-                            brandRV.adapter = brandAdapter
-                            brandAdapter.setItemClickListener(object :
-                                BrandAdapter.OnItemClickListener {
-                                override fun onClick(v: View, position: Int) {
-                                    val action =
-                                        BrandFragmentDirections.actionBrandFragmentToBrandMenuFragment(
-                                            it[position].brandName
-                                        )
-                                    findNavController().navigate(action)
-                                }
-                            })
-                        }
-                        if (it.isNotEmpty()) {
-                            brandAdapter.addBrands(it)
-                            //loading.dismiss()
-                        }
+                        brandAdapter.submitList(it)
                     }
                 }
             }
         }
     }
+
 }

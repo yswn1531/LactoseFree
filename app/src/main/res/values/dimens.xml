@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="brandImageWidth">120dp</dimen>
-    <dimen name="brandImageHeight">120dp</dimen>
+    <dimen name="brandImageWidth">160dp</dimen>
+    <dimen name="brandImageHeight">160dp</dimen>
     <dimen name="favoriteImageWidth">70dp</dimen>
     <dimen name="favoriteImageHeight">70dp</dimen>
     <dimen name="favoriteDetailImageWidth">180dp</dimen>
