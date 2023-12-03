@@ -10,7 +10,7 @@ import com.yoon.lactosefree.databinding.DialogMenuDetailBinding
 
 class MenuDetailDialog(
     private val detail: MenuDetail,
-    private val context: Context)
+     context: Context)
     : Dialog(context) {
 
     private lateinit var dialogBinding: DialogMenuDetailBinding
@@ -36,6 +36,7 @@ class MenuDetailDialog(
             if (detail.includeMilk){
                 noticeMilkText.text = "우유 함유"
             }
+            else noticeMilkText.visibility = View.GONE
         }
 
     }
