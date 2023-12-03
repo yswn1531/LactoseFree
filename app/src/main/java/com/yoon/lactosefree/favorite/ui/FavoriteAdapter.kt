@@ -3,15 +3,71 @@ package com.yoon.lactosefree.favorite.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yoon.lactosefree.R
 import com.yoon.lactosefree.brand.Brand
+import com.yoon.lactosefree.databinding.ItemRecyclerviewFavoriteBinding
 import com.yoon.lactosefree.favorite.Favorite
 
+class FavoriteAdapter(private val itemClickListener: (Favorite) -> Unit) :
+    ListAdapter<Favorite, FavoriteAdapter.ViewHolder>(diffUtil){
+
+    inner class ViewHolder(val binding : ItemRecyclerviewFavoriteBinding) :
+    RecyclerView.ViewHolder(binding.root){
+
+        fun bind(favorite: Favorite){
+            with(binding){
+                Glide.with(favoriteImage.context)
+                    .load(favorite.imageUri)
+                    .into(favoriteImage)
+                favoriteBrand.text = favorite.brandName
+                favoriteName.text = favorite.brandBeverageName
+                favoriteRating.rating = favorite.rating
+
+            }
+            itemView.setOnClickListener {
+                itemClickListener(favorite)
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
+            ItemRecyclerviewFavoriteBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(currentList[position])
+    }
+
+    companion object {
+        val diffUtil = object : DiffUtil.ItemCallback<Favorite>() {
+            override fun areItemsTheSame(oldItem: Favorite, newItem: Favorite): Boolean {
+                return oldItem.brandBeverageName == newItem.brandBeverageName
+            }
+
+            override fun areContentsTheSame(oldItem: Favorite, newItem: Favorite): Boolean {
+                return oldItem == newItem
+            }
+
+        }
+    }
+
+}
+
+/*
 class FavoriteAdapter() :
     RecyclerView.Adapter<FavoriteAdapter.ItemHolder>() {
 
@@ -70,4 +126,4 @@ class FavoriteAdapter() :
         return favoriteList
     }
     override fun getItemCount(): Int =  favoriteList.size
-}
+}*/

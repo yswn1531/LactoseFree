@@ -1,10 +1,12 @@
 package com.yoon.lactosefree.brand.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.yoon.lactosefree.brand.BrandBeverage
 import com.yoon.lactosefree.brand.BrandViewModel
 import com.yoon.lactosefree.brand.MenuDetail
 import com.yoon.lactosefree.common.CustomDialog
@@ -32,10 +35,10 @@ class BrandMenuFragment :
     ViewBindingBaseFragment<FragmentBrandMenuBinding>(FragmentBrandMenuBinding::inflate) {
 
     private lateinit var brandMenuAdapter: BrandMenuAdapter
-    private val viewModel: BrandViewModel by viewModels()
+    private val viewModel: BrandViewModel by activityViewModels()
     private lateinit var categoryList: List<String>
     private val brandArgs: BrandMenuFragmentArgs by navArgs()
-    private lateinit var loading : LoadingDialog
+    private lateinit var loading: LoadingDialog
 
     /*
     private var filterCaffeine = false
@@ -43,14 +46,13 @@ class BrandMenuFragment :
     private var filterKcal = false
     */
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBrandMenuBinding.inflate(inflater, container, false)
-        viewModel.getBrandBeverageImageFromStorage(brandArgs.brandName)
+        viewModel.getBrandBeverageImageFromStorage()
         return binding.root
     }
 
@@ -61,6 +63,7 @@ class BrandMenuFragment :
         insteadMilkDialog()
         initView()
         //loading.show()
+        resultByCategory()
 
         //툴바에 뒤로가기 버튼
         binding.brandMenuTB.setNavigationOnClickListener {
@@ -76,7 +79,6 @@ class BrandMenuFragment :
         binding.brandMenuTB.title = brandArgs.brandName
         tabAddFromData()
         tabSelectEvent()
-        resultByCategory()
         initRecyclerView()
     }
 
@@ -112,6 +114,7 @@ class BrandMenuFragment :
                     }
                 }
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
@@ -125,6 +128,41 @@ class BrandMenuFragment :
     private fun initRecyclerView() {
         val brandRV = binding.brandMenuRV
         brandRV.layoutManager = GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
+        brandMenuAdapter = BrandMenuAdapter(itemClickListener, favoriteClickListener)
+        brandRV.adapter = brandMenuAdapter
+    }
+
+
+    private val itemClickListener: (BrandBeverage) -> Unit = { beverage ->
+        MenuDetailDialog(
+            MenuDetail(
+                beverage.beverageSize,
+                beverage.beverageKcal,
+                beverage.beverageSodium,
+                beverage.beverageSugar,
+                beverage.beverageFat,
+                beverage.beverageProtein,
+                beverage.beverageCaffeine,
+                beverage.includeMilk
+            ), requireContext()
+        ).show()
+    }
+
+    private val favoriteClickListener: (BrandBeverage) -> Unit = { beverage ->
+        if (beverage.favorite) {
+            viewModel.deleteFavoriteBeverage(beverage.beverageName)
+            beverage.favorite = false
+            viewModel.setBrandBeverage(
+                beverage.beverageName,
+                false
+            )
+        } else {
+            beverage.favorite = true
+            viewModel.insertFavoriteBeverage(beverage)
+            viewModel.setBrandBeverage(
+                beverage.beverageName, true
+            )
+        }
     }
 
     /**
@@ -134,74 +172,15 @@ class BrandMenuFragment :
 
     private fun resultByCategory() {
         lifecycleScope.launch {
-                viewModel.brandBeverage.collect {
-                    it?.let {
-                        if (!::brandMenuAdapter.isInitialized) {
-                            brandMenuAdapter = BrandMenuAdapter()
-                            recyclerItemClickEvent()
-                            favoriteButtonClickEvent()
-                            brandMenuAdapter.addBrandBeverages(emptyList())
-                            binding.brandMenuRV.adapter = brandMenuAdapter
-                        }
-                        if (it.isNotEmpty()) {
-                            brandMenuAdapter.addBrandBeverages(it)
-                            //loading.dismiss()
-                        }
-                    }
+            viewModel.brandBeverage.collect {
+                it?.let {
+                    Log.e("COLLECT-BEVERAGE", "COLLECT-BEVERAGE")
+                    brandMenuAdapter.submitList(it)
                 }
+            }
         }
     }
 
-
-    /**
-     * Recycler item click시 해당 영양성분을 보여주는 Dialog 표시
-     *
-     */
-    fun recyclerItemClickEvent() {
-        brandMenuAdapter.setItemClickListener(object : BrandMenuAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
-                val getBeverage = brandMenuAdapter.getProductList()[position]
-                MenuDetailDialog(
-                    MenuDetail(
-                        getBeverage.beverageSize,
-                        getBeverage.beverageKcal,
-                        getBeverage.beverageSodium,
-                        getBeverage.beverageSugar,
-                        getBeverage.beverageFat,
-                        getBeverage.beverageProtein,
-                        getBeverage.beverageCaffeine,
-                        getBeverage.includeMilk
-                    ), requireContext()
-                ).show()
-            }
-        })
-    }
-
-    /**
-     * Favorite button 클릭시 해당 음료가 좋아하는 목록에 추가, 삭제
-     *
-     */
-    fun favoriteButtonClickEvent() {
-        brandMenuAdapter.favoriteButtonClickListener(object :
-            BrandMenuAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
-                if (brandMenuAdapter.getProductList()[position].favorite) {
-                    viewModel.deleteFavoriteBeverage(brandMenuAdapter.getProductList()[position].beverageName)
-                    brandMenuAdapter.getProductList()[position].favorite = false
-                    viewModel.setBrandBeverage(
-                        brandMenuAdapter.getProductList()[position].beverageName,
-                        false
-                    )
-                } else {
-                    brandMenuAdapter.getProductList()[position].favorite = true
-                    viewModel.insertFavoriteBeverage(brandMenuAdapter.getProductList()[position])
-                    viewModel.setBrandBeverage(
-                        brandMenuAdapter.getProductList()[position].beverageName, true
-                    )
-                }
-            }
-        })
-    }
 
     /**
      * Tab에 가져온 Category를 추가하는 함수
@@ -238,30 +217,80 @@ class BrandMenuFragment :
         }
     }
 
-    /*fun filterSelectEvent() {
-     binding.brandMenuTB.setOnMenuItemClickListener { item ->
-         when (item.itemId) {
-             R.id.filterCaffeineFree -> {
-                 filterCaffeine = !filterCaffeine
-                 item.isChecked = !item.isChecked
-                 Log.e("boolean",filterCaffeine.toString())
-                 Toast.makeText(context, "카페인 프리", Toast.LENGTH_SHORT).show()
-                 true
-             }
-
-             R.id.filterLowKcal -> {
-                 Toast.makeText(context, "저칼로리", Toast.LENGTH_SHORT).show()
-                 true
-             }
-
-             R.id.filterLowSugar -> {
-                 Toast.makeText(context, "저당", Toast.LENGTH_SHORT).show()
-                 true
-             }
-
-             else -> false
-         }
-     }
- }*/
-
 }
+
+/*fun filterSelectEvent() {
+ binding.brandMenuTB.setOnMenuItemClickListener { item ->
+     when (item.itemId) {
+         R.id.filterCaffeineFree -> {
+             filterCaffeine = !filterCaffeine
+             item.isChecked = !item.isChecked
+             Log.e("boolean",filterCaffeine.toString())
+             Toast.makeText(context, "카페인 프리", Toast.LENGTH_SHORT).show()
+             true
+         }
+
+         R.id.filterLowKcal -> {
+             Toast.makeText(context, "저칼로리", Toast.LENGTH_SHORT).show()
+             true
+         }
+
+         R.id.filterLowSugar -> {
+             Toast.makeText(context, "저당", Toast.LENGTH_SHORT).show()
+             true
+         }
+
+         else -> false
+     }
+ }
+}*/
+
+/**
+ * Recycler item click시 해당 영양성분을 보여주는 Dialog 표시
+ *
+ */
+/*fun recyclerItemClickEvent() {
+    brandMenuAdapter.setItemClickListener(object : BrandMenuAdapter.OnItemClickListener {
+        override fun onClick(v: View, position: Int) {
+            val getBeverage = brandMenuAdapter.getProductList()[position]
+            MenuDetailDialog(
+                MenuDetail(
+                    getBeverage.beverageSize,
+                    getBeverage.beverageKcal,
+                    getBeverage.beverageSodium,
+                    getBeverage.beverageSugar,
+                    getBeverage.beverageFat,
+                    getBeverage.beverageProtein,
+                    getBeverage.beverageCaffeine,
+                    getBeverage.includeMilk
+                ), requireContext()
+            ).show()
+        }
+    })
+}*/
+
+/**
+ * Favorite button 클릭시 해당 음료가 좋아하는 목록에 추가, 삭제
+ *
+ */
+/*fun favoriteButtonClickEvent() {
+    brandMenuAdapter.favoriteButtonClickListener(object :
+        BrandMenuAdapter.OnItemClickListener {
+        override fun onClick(v: View, position: Int) {
+            if (brandMenuAdapter.getProductList()[position].favorite) {
+                viewModel.deleteFavoriteBeverage(brandMenuAdapter.getProductList()[position].beverageName)
+                brandMenuAdapter.getProductList()[position].favorite = false
+                viewModel.setBrandBeverage(
+                    brandMenuAdapter.getProductList()[position].beverageName,
+                    false
+                )
+            } else {
+                brandMenuAdapter.getProductList()[position].favorite = true
+                viewModel.insertFavoriteBeverage(brandMenuAdapter.getProductList()[position])
+                viewModel.setBrandBeverage(
+                    brandMenuAdapter.getProductList()[position].beverageName, true
+                )
+            }
+        }
+    })
+}*/
