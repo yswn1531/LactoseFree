@@ -33,6 +33,14 @@ class BrandMenuAdapter(
                     .load(brandBeverage.beverageImage)
                     .into(brandMenuImage)
 
+                if (brandBeverage.includeMilk){
+                    includeMilkEmotion.visibility = View.VISIBLE
+                }
+                else {
+                    includeMilkEmotion.visibility = View.INVISIBLE
+                }
+
+
                 if (brandBeverage.favorite) {
                     favoriteButton.setImageResource(R.drawable.ic_favorite_24)
                 } else {

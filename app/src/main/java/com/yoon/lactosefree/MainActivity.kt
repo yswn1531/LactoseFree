@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.yoon.lactosefree.brand.BrandViewModel
 import com.yoon.lactosefree.common.PermissionCheck
 import com.yoon.lactosefree.common.PermissionManager
 import com.yoon.lactosefree.databinding.ActivityMainBinding
@@ -18,6 +20,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var permissionCheck: PermissionCheck
 
+    private val viewModel: BrandViewModel by lazy {
+        ViewModelProvider(this).get(BrandViewModel::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
@@ -27,7 +33,8 @@ class MainActivity : AppCompatActivity() {
         if (!PermissionManager.getInstance().isPermission) {
             permissionCheck()
         }
-
+        viewModel.getBrandImageFromStorage()
+        viewModel.getBrandBeverageImageFromStorage()
         setupJetpackNavigation()
     }
 

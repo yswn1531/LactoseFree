@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import com.yoon.lactosefree.R
 import com.yoon.lactosefree.brand.MenuDetail
 import com.yoon.lactosefree.databinding.DialogMenuDetailBinding
 
@@ -20,11 +21,15 @@ class MenuDetailDialog(
         fun onClick(v: View)
     }
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dialogBinding = DialogMenuDetailBinding.inflate(layoutInflater).also{
+            context.setTheme(R.style.DialogStyle)
             setContentView(it.root)
         }
+
         with(dialogBinding){
             size.text = detail.size.toString()
             kcal.text = detail.kcal.toString()
@@ -34,9 +39,12 @@ class MenuDetailDialog(
             protein.text = detail.protein.toString()
             caffeine.text = detail.caffeine.toString()
             if (detail.includeMilk){
-                noticeMilkText.text = "우유 함유"
+                noticeMilkText.setText(R.string.includeMilk)
+                menuDetailStomach.setImageResource(R.drawable.ic_stomach_48)
             }
-            else noticeMilkText.visibility = View.GONE
+            else{
+                noticeMilkText.visibility = View.GONE
+            }
         }
 
     }

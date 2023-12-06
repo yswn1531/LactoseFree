@@ -36,6 +36,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="30dp"
         android:padding="4dp"
+        android:paddingStart="10dp"
         android:textSize="@dimen/headLineTextSize"
         android:text="@string/lactoseTitle"
         android:background="@drawable/style_menu_tab"
@@ -53,6 +54,7 @@
         android:layout_marginTop="20dp"
         android:text="@string/lactoseContent"
         android:textSize="@dimen/subTitleTextSize"
+        android:paddingStart="10dp"
         android:background="@drawable/style_menu_tab"
         />
 
@@ -62,9 +64,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:background="@drawable/style_menu_tab"
-        android:padding="4dp"
         android:text="@string/lactoseCafeTitle"
         android:textSize="@dimen/headLineTextSize"
+        android:paddingStart="10dp"
         app:layout_constraintEnd_toStartOf="@+id/glInformationEnd"
         app:layout_constraintStart_toStartOf="@id/glInformationStart"
         app:layout_constraintTop_toBottomOf="@id/normalInfo" />
@@ -79,6 +81,7 @@
         android:layout_marginTop="20dp"
         android:text="@string/lactoseCafeContent"
         android:textSize="@dimen/subTitleTextSize"
+        android:padding="10dp"
         android:background="@drawable/style_menu_tab"
         />
 

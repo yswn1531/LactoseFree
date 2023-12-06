@@ -7,9 +7,7 @@
     app:cardElevation="5dp"
     app:cardCornerRadius="8dp"
     app:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
+    android:layout_margin="8dp"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,20 +32,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/favoriteImage"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="스타벅스"
             android:textSize="@dimen/bodyTextSize"
             />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/favoriteName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="@dimen/subTitleTextSize"
+            app:layout_constraintBottom_toTopOf="@id/favoriteRating"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/favoriteImage"
-            app:layout_constraintBottom_toTopOf="@id/favoriteRating"
-            android:text="아이스 아메리카노"
-            android:textSize="@dimen/subTitleTextSize"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/favoriteBrand" />
 
         <androidx.appcompat.widget.AppCompatRatingBar
             android:id="@+id/favoriteRating"

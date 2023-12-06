@@ -52,7 +52,6 @@ class BrandMenuFragment :
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentBrandMenuBinding.inflate(inflater, container, false)
-        viewModel.getBrandBeverageImageFromStorage()
         return binding.root
     }
 
@@ -245,52 +244,5 @@ class BrandMenuFragment :
  }
 }*/
 
-/**
- * Recycler item click시 해당 영양성분을 보여주는 Dialog 표시
- *
- */
-/*fun recyclerItemClickEvent() {
-    brandMenuAdapter.setItemClickListener(object : BrandMenuAdapter.OnItemClickListener {
-        override fun onClick(v: View, position: Int) {
-            val getBeverage = brandMenuAdapter.getProductList()[position]
-            MenuDetailDialog(
-                MenuDetail(
-                    getBeverage.beverageSize,
-                    getBeverage.beverageKcal,
-                    getBeverage.beverageSodium,
-                    getBeverage.beverageSugar,
-                    getBeverage.beverageFat,
-                    getBeverage.beverageProtein,
-                    getBeverage.beverageCaffeine,
-                    getBeverage.includeMilk
-                ), requireContext()
-            ).show()
-        }
-    })
-}*/
 
-/**
- * Favorite button 클릭시 해당 음료가 좋아하는 목록에 추가, 삭제
- *
- */
-/*fun favoriteButtonClickEvent() {
-    brandMenuAdapter.favoriteButtonClickListener(object :
-        BrandMenuAdapter.OnItemClickListener {
-        override fun onClick(v: View, position: Int) {
-            if (brandMenuAdapter.getProductList()[position].favorite) {
-                viewModel.deleteFavoriteBeverage(brandMenuAdapter.getProductList()[position].beverageName)
-                brandMenuAdapter.getProductList()[position].favorite = false
-                viewModel.setBrandBeverage(
-                    brandMenuAdapter.getProductList()[position].beverageName,
-                    false
-                )
-            } else {
-                brandMenuAdapter.getProductList()[position].favorite = true
-                viewModel.insertFavoriteBeverage(brandMenuAdapter.getProductList()[position])
-                viewModel.setBrandBeverage(
-                    brandMenuAdapter.getProductList()[position].beverageName, true
-                )
-            }
-        }
-    })
-}*/
+
