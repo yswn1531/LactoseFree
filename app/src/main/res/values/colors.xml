@@ -9,6 +9,5 @@
     <color name="DiverColor">#BDBDBD</color>
     <color name="ThirdText">#757575</color>
     <color name="RatingBarColor">#FFC100</color>
-    <color name="MenuFavoriteSelected">#FF0000</color>
-    <color name="MenuFavoriteBasic">#BC8F8F</color>
+    <color name="MenuFavorite">#ECE6CC</color>
 </resources>
