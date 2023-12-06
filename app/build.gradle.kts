@@ -60,6 +60,8 @@ dependencies {
     implementation ("androidx.preference:preference-ktx:1.2.1")
     //CircleView
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+    //rxbinding
+    implementation ("com.jakewharton.rxbinding4:rxbinding:4.0.0")
     //Navigation
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.5")
