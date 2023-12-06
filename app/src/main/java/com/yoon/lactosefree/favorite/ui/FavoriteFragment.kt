@@ -46,7 +46,7 @@ class FavoriteFragment :
 
     fun initRecyclerView() {
         with(binding.favoriteRV) {
-            layoutManager = GridLayoutManager(context, 2, LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             favoriteAdapter = FavoriteAdapter { favorite ->
                 val action =
                     FavoriteFragmentDirections.actionFavoriteFragmentToFavoriteDetailFragment(
