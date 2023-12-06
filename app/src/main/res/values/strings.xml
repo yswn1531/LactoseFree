@@ -1,17 +1,12 @@
 <resources>
-    <string name="app_name">LactoseFree</string>
+    <string name="app_name">유당없당</string>
     <string name="lactoseTitle">유당불내증</string>
     <string name="lactoseContent">
         락토오스를 분해하는 락타아제의 부족으로 일어나는 현상
     </string>
     <string name="lactoseCafeTitle">대체 우유 옵션이 있는 곳</string>
     <string name="lactoseCafeContent">
-        -메가커피: 아몬드밀크, 오트밀크 \n
-        -스타벅스: 오트밀크, 두유 \n
-        -빽다방: 두유 \n
-        -엔젤리너스: 락토프리, 두유 \n
-        -폴바셋: 락토프리, 두유 \n
-        -투섬플레이스: 락토프리, 두유 \n
+        -메가커피: 아몬드밀크, 오트음료 \n-스타벅스: 오트음료, 두유 \n-빽다방: 두유 \n-엔젤리너스: 락토프리, 두유 \n-폴바셋: 락토프리, 두유 \n-투섬플레이스: 락토프리, 두유 \n
     </string>
     <string name="tempContext">
         에스프레스로는 쓰지만\n
@@ -33,6 +28,6 @@
     <string name="fat">포화 지방 (g)</string>
     <string name="protein">단백질 (g)</string>
     <string name="caffeine">카페인 (mg)</string>
-
+    <string name="includeMilk">유당 있당</string>
 
 </resources>
