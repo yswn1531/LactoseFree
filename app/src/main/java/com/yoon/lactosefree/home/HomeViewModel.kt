@@ -22,17 +22,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-/**
- * 해야 할 일
- * 1. 현재 나의 좌표 데이터
- *  1.1 현재 ViewModel 에서 받음
- * 2. 현재 나의 좌표 데이터를 넣은 POI 데이터
- *  2.1 구현 된 부분 : 좌표 데이터를 30초 마다 받아서 POI 데이터 요청
- *  2.2 미구현 부분 : 브랜드 목록에 있는 모든 POI 요청 해서 받아옴
- * 3. 마커에 추가할 브랜드 이미지
- *  3.1 InfoWindow 에 추가할 이미지
- *  3.2 Marker 를 대신할 이미지
- */
 
 
 class HomeViewModel : ViewModel() {
@@ -61,6 +50,7 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun coroutineFlowSelectPOI(latLng: LatLng) {
+
         RetrofitOkHttpManager.poiCoroutineScope.launch {
             flow<TMapPOISearchResult> {
                 val response = RetrofitOkHttpManager.poiService.coroutineFlowPOIItemSelect(
