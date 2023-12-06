@@ -115,14 +115,7 @@ private fun View.flowClicks(): Flow<Unit> = callbackFlow {
     awaitClose { setOnClickListener(null) }
 }.buffer(0)
 
-/**
- * 중복 클릭 방지
- *
- * @param T 타입
- * @param intervalTime 중복 클릭 방지 시간
- * @return flow의 값을 리턴
- * @author 윤성욱
- */
+
 private fun <T> Flow<T>.throttleFirst(intervalTime: Long): Flow<T> = flow {
     var throttleTime = 0L
     collect { upStream ->
