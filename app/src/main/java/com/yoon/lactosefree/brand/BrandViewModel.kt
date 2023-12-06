@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.yoon.lactosefree.common.BRAND_IMAGE_STORAGE_PATH
 import com.yoon.lactosefree.common.DefaultApplication
 import com.yoon.lactosefree.common.FIRESTORE_COLLECTION_NAME_BEVERAGE
 import com.yoon.lactosefree.common.FIRESTORE_COLLECTION_NAME_BRAND
@@ -35,7 +36,6 @@ class BrandViewModel : ViewModel() {
     private val isBrandBeverageImageDownload = MutableStateFlow(false)
 
 
-
     private var _brand = MutableStateFlow<List<Brand>?>(null)
     val brand: StateFlow<List<Brand>?>
         get() = _brand
@@ -53,19 +53,6 @@ class BrandViewModel : ViewModel() {
         get() = _brandInsteadMilk
 
 
-    /* private var _brandBeverageOrderBySugar = MutableStateFlow<List<BrandBeverage>?>(null)
-     val brandBeverageOrderBySugar : StateFlow<List<BrandBeverage>?>
-         get() = _brandBeverageOrderBySugar
-
-     private var _brandBeverageOrderByKcal = MutableStateFlow<List<BrandBeverage>?>(null)
-     val brandBeverageOrderByKcal : StateFlow<List<BrandBeverage>?>
-         get() = _brandBeverageOrderByKcal
-
-     private var _brandBeverageOrderByCaffeine = MutableStateFlow<List<BrandBeverage>?>(null)
-     val brandBeverageOrderByCaffeine : StateFlow<List<BrandBeverage>?>
-         get() = _brandBeverageOrderByCaffeine*/
-
-
     private var brandImageMap: MutableMap<String, Uri> = mutableMapOf()
     private var beverageImageMap: MutableMap<String, Uri> = mutableMapOf()
     private var isDownloadBrandTask : Boolean = false
@@ -75,7 +62,8 @@ class BrandViewModel : ViewModel() {
         if (!isDownloadBrandTask){
             coroutineScopeIO.launch {
                 val pathReference =
-                    FirebaseStorage.getInstance().reference.child("Brand/BrandLogo/").listAll().await()
+                    FirebaseStorage.getInstance().reference.child(BRAND_IMAGE_STORAGE_PATH)
+                        .listAll().await()
                 val result = coroutineScopeIO.async {
                     pathReference.items.let {
                         for (item in it) {
@@ -97,11 +85,11 @@ class BrandViewModel : ViewModel() {
         }
     }
 
-    fun getBrandBeverageImageFromStorage(brandName: String) {
-        if (!isDownloadBeverageTask){
+    fun getBrandBeverageImageFromStorage() {
+        if (!isDownloadBeverageTask) {
             coroutineScopeIO.launch {
                 val pathReference =
-                    FirebaseStorage.getInstance().reference.child("Beverage/$brandName/").listAll()
+                    FirebaseStorage.getInstance().reference.child("Beverage/스타벅스/").listAll()
                         .await()
                 val result = coroutineScopeIO.async {
                     pathReference.items.let {
@@ -163,9 +151,10 @@ class BrandViewModel : ViewModel() {
                         fireStoreDB.collection(fireStoreCollectionNameBrand)
                             .get().await().toObjects(GetBrandInfoFromFirebase::class.java)
                     val result = coroutineScopeIO.async {
-                        for (data in docRef) {
-                            for (mapItem in brandImageMap) {
-                                if (data.brandName == mapItem.key) {
+                        docRef.asSequence().forEach { data ->
+                            brandImageMap
+                                .filter { it.key == data.brandName }
+                                .forEach { mapItem ->
                                     tempList.add(
                                         Brand(
                                             brandName = data.brandName,
@@ -173,7 +162,6 @@ class BrandViewModel : ViewModel() {
                                         )
                                     )
                                 }
-                            }
                         }
                         tempList
                     }.await()
@@ -187,7 +175,7 @@ class BrandViewModel : ViewModel() {
     }
 
 
-    /*fun getBrand() {
+    /* fun getBrand() {
         val storage = FirebaseStorage.getInstance()
         val storageRef = storage.reference
         coroutineScopeIO.launch {
@@ -229,16 +217,17 @@ class BrandViewModel : ViewModel() {
         coroutineScopeIO.launch {
             isBrandBeverageImageDownload.collect { isDownload ->
                 Log.e("isDownload-COLLECT", isDownload.toString())
-                if (isDownload){
+                if (isDownload) {
                     val tempList: MutableList<BrandBeverage> = mutableListOf()
                     val docRef: MutableList<GetBrandBeverageInfoFromFirebase> = fireStoreDB
                         .collection(fireStoreCollectionNameBrandBeverage)
                         .whereEqualTo("beverageCategory", category)
                         .get().await().toObjects(GetBrandBeverageInfoFromFirebase::class.java)
                     val result = coroutineScopeIO.async {
-                        for (beverages in docRef) {
-                            for (images in beverageImageMap) {
-                                if (beverages.beverageName == images.key) {
+                        docRef.forEach {beverages ->
+                            beverageImageMap
+                                .filter { beverages.beverageName == it.key }
+                                .forEach { images ->
                                     tempList.add(
                                         BrandBeverage(
                                             brandName = beverages.brandName,
@@ -257,16 +246,12 @@ class BrandViewModel : ViewModel() {
                                         )
                                     )
                                 }
-                            }
-                        }
-                        tempList.forEach {
-                            Log.e("LIST",it.beverageName)
                         }
                         tempList
                     }.await()
                     if (result.isNotEmpty()) {
                         Log.e("BEVERAGE-EMIT", "BEVERAGE-EMIT")
-                        flow<List<BrandBeverage>?> {
+                        flow<List<BrandBeverage>> {
                             _brandBeverage.emit(tempList)
                         }.stateIn(coroutineScopeIOBrand)
                     }
@@ -295,8 +280,6 @@ class BrandViewModel : ViewModel() {
             }.stateIn(CoroutineScope(Dispatchers.IO))
         }
     }
-
-
 
 
     /**
