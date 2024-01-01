@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.yoon.lactosefree.common.BEVERAGE_IMAGE_STORAGE_PATH
 import com.yoon.lactosefree.common.BRAND_IMAGE_STORAGE_PATH
 import com.yoon.lactosefree.common.DefaultApplication
 import com.yoon.lactosefree.common.FIRESTORE_COLLECTION_NAME_BEVERAGE
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
+const val CATEGORY =  "beverageCategory"
 
 class BrandViewModel : ViewModel() {
 
@@ -55,8 +57,8 @@ class BrandViewModel : ViewModel() {
 
     private var brandImageMap: MutableMap<String, Uri> = mutableMapOf()
     private var beverageImageMap: MutableMap<String, Uri> = mutableMapOf()
-    private var isDownloadBrandTask : Boolean = false
-    private var isDownloadBeverageTask : Boolean = false
+    private var isDownloadBrandTask: Boolean = false
+    private var isDownloadBeverageTask: Boolean = false
 
     fun getBrandImageFromStorage() {
         if (!isDownloadBrandTask){
@@ -78,7 +80,7 @@ class BrandViewModel : ViewModel() {
                 }.await()
                 if (result.isNotEmpty()) {
                     Log.e("BRAND-IMAGE-GET", "DONE")
-                    isBrandImageDownload.value = true
+                    isBrandImageDownload.emit(true)
                     isDownloadBrandTask = true
                 }
             }
@@ -89,7 +91,7 @@ class BrandViewModel : ViewModel() {
         if (!isDownloadBeverageTask) {
             coroutineScopeIO.launch {
                 val pathReference =
-                    FirebaseStorage.getInstance().reference.child("Beverage/스타벅스/").listAll()
+                    FirebaseStorage.getInstance().reference.child(BEVERAGE_IMAGE_STORAGE_PATH).listAll()
                         .await()
                 val result = coroutineScopeIO.async {
                     pathReference.items.let {
@@ -104,7 +106,7 @@ class BrandViewModel : ViewModel() {
                     beverageImageMap
                 }.await()
                 if (result.isNotEmpty()) {
-                    isBrandBeverageImageDownload.value = true
+                    isBrandBeverageImageDownload.emit(true)
                     isDownloadBeverageTask = true
                 }
             }
@@ -213,18 +215,16 @@ class BrandViewModel : ViewModel() {
      * @param category  탭을 눌렀을 때 카테고리
      */
     fun getBrandBeverage(category: String) {
-        Log.e("STARTBEVERAGE", "STARTBEVERAGE")
         coroutineScopeIO.launch {
             isBrandBeverageImageDownload.collect { isDownload ->
-                Log.e("isDownload-COLLECT", isDownload.toString())
                 if (isDownload) {
                     val tempList: MutableList<BrandBeverage> = mutableListOf()
                     val docRef: MutableList<GetBrandBeverageInfoFromFirebase> = fireStoreDB
                         .collection(fireStoreCollectionNameBrandBeverage)
-                        .whereEqualTo("beverageCategory", category)
+                        .whereEqualTo(CATEGORY, category)
                         .get().await().toObjects(GetBrandBeverageInfoFromFirebase::class.java)
                     val result = coroutineScopeIO.async {
-                        docRef.forEach {beverages ->
+                        docRef.forEach { beverages ->
                             beverageImageMap
                                 .filter { beverages.beverageName == it.key }
                                 .forEach { images ->

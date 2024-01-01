@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import com.yoon.lactosefree.common.FAVORITE_DATABASE_NAME
 
 @Database(entities = [(Favorite::class)], exportSchema = false, version = 1)
 @TypeConverters(UriConverters::class)
@@ -20,7 +21,7 @@ abstract class FavoriteRoomDatabase : RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         FavoriteRoomDatabase::class.java,
-                        "favorite_database"
+                        FAVORITE_DATABASE_NAME
                     ).build()
                 }
             }

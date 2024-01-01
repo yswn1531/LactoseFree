@@ -56,7 +56,7 @@
         app:layout_constraintStart_toStartOf="@id/glFavoriteDetailStart"
         app:layout_constraintEnd_toEndOf="@id/glFavoriteDetailEnd"
         app:layout_constraintTop_toBottomOf="@id/favoriteDetailImage"
-        android:layout_margin="20dp"
+        android:layout_margin="24dp"
         android:numStars="5"
         android:progressTint="#FFC100"
         android:stepSize="1"

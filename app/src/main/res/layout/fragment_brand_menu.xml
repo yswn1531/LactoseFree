@@ -54,7 +54,7 @@
         android:id="@+id/brandMenuRV"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="@dimen/recyclerViewMarginTop"
         app:layout_constraintStart_toStartOf="@id/glMenuStart"
         app:layout_constraintEnd_toEndOf="@+id/glMenuEnd"
         app:layout_constraintBottom_toBottomOf="parent"
