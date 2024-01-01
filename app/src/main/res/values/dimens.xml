@@ -6,6 +6,13 @@
     <dimen name="favoriteImageHeight">70dp</dimen>
     <dimen name="favoriteDetailImageWidth">180dp</dimen>
     <dimen name="favoriteDetailImageHeight">180dp</dimen>
+    <dimen name="menuDialogPaddingHorizontal">50dp</dimen>
+    <dimen name="menuDialogPaddingVertical">30dp</dimen>
+    <dimen name="menuDetailDialogMarginTop">20dp</dimen>
+    <dimen name="menuDetailDialogGuideLine">70dp</dimen>
+    <dimen name="menuDetailDialogImageMargin">10dp</dimen>
+    <dimen name="menuDetailDialogMarginStart">40dp</dimen>
+    <dimen name="recyclerViewMarginTop">24dp</dimen>
     <dimen name="titleTextSize">34sp</dimen>
     <dimen name="bodyTextSize">16sp</dimen>
     <dimen name="subTitleTextSize">22sp</dimen>

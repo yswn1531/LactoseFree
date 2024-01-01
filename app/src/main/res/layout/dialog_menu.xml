@@ -4,8 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:paddingHorizontal="50dp"
-    android:paddingVertical="30dp"
+    android:paddingHorizontal="@dimen/menuDialogPaddingHorizontal"
+    android:paddingVertical="@dimen/menuDialogPaddingVertical"
     android:background="@drawable/style_dialog"
     >
 

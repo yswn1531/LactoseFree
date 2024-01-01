@@ -33,7 +33,7 @@
         android:id="@+id/favoriteRV"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/recyclerViewMarginTop"
         app:layout_constraintStart_toStartOf="@id/glFavoriteStart"
         app:layout_constraintEnd_toEndOf="@id/glFavoriteEnd"
         app:layout_constraintTop_toTopOf="parent"
