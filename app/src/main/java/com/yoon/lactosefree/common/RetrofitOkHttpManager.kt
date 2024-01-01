@@ -37,14 +37,14 @@ object RetrofitOkHttpManager {
 
     init {
         okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(Interceptor { chain: Interceptor.Chain ->
+            .addInterceptor{ chain: Interceptor.Chain ->
                 val request = chain.request()
                 val newRequest: Request = request.newBuilder()
-                    .addHeader("Accept", ACCEPT)        //Header 설정
-                    .addHeader("appKey", APPKEY)
+                    .addHeader(HEADER_NAME_ACCEPT, ACCEPT)        //Header 설정
+                    .addHeader(HEADER_NAME_APPKEY, APPKEY)
                     .build()
                 chain.proceed(newRequest)
-            }).addInterceptor(RetryInterceptor())
+            }.addInterceptor(RetryInterceptor())
             .connectTimeout(20, TimeUnit.SECONDS)
             .readTimeout(15, TimeUnit.SECONDS)
             .build()

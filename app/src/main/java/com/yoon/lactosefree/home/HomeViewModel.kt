@@ -14,6 +14,7 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.model.LatLng
 import com.yoon.lactosefree.common.DefaultApplication
 import com.yoon.lactosefree.common.RetrofitOkHttpManager
+import com.yoon.lactosefree.common.SEARCH_KEYWORD
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,11 +51,10 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun coroutineFlowSelectPOI(latLng: LatLng) {
-
         RetrofitOkHttpManager.poiCoroutineScope.launch {
             flow<TMapPOISearchResult> {
                 val response = RetrofitOkHttpManager.poiService.coroutineFlowPOIItemSelect(
-                    "스타벅스",
+                    SEARCH_KEYWORD,
                     latLng.latitude,
                     latLng.longitude
                 )
